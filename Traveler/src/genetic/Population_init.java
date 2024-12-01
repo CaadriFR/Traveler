@@ -8,111 +8,114 @@ import java.util.Collections;
 
 public class Population_init {
 
-    private ArrayList<City> cities_of_problem; //ArrayList des villes par lesquelles on va passer pour ressoudre le problème du voyageur de commerce
-    private ArrayList<ArrayList<City>> population = new ArrayList<>(); //ArrayList de ArrayList de City : modélise notre population initiale
-    private int size_of_population; // correspond au nombre de populations envisagées pour la première itération de l'algorithme génétique
-    private double[] tab_of_fitness;
+    private ArrayList<City> cities_of_problem; //ArrayList of 'City' with the cities which we pass for resolve the TravelerProblem
+    private ArrayList<ArrayList<City>> population = new ArrayList<>(); //ArrayList of ArrayList of 'City' : modelize our population
+    private int size_of_population; // number of individuals we would for the first iteration of GeneticAlgorithm
+    private double[] tab_of_fitness; // tab of fitness : tab_of_fitness[i] it's the fitness of the individual in population[i]
     
-    
-    // Constructeur
+    // ----------------------------------------------------------------------------------------------
+
+    // Constructor :
     public Population_init( ArrayList<City> cities_of_problem, int size_of_population) {
         this.cities_of_problem = cities_of_problem;
         this.size_of_population = size_of_population;
         this.tab_of_fitness = new double[ size_of_population ];
     }
-
-    // Créer un nouvel individu et l'ajouter à la population
     
-    public void createIndividual() {
+    // ----------------------------------------------------------------------------------------------
+    //				DISPLAY
+    
+    // Display Cities of an ArrayList of City
+    public void displayCities(ArrayList<City> cityList) {
     	
-        ArrayList<City> individual = new ArrayList<>();
-
-        // Créer une copie de la liste des villes
-        for (City city : this.cities_of_problem) {
-            individual.add(new City(city.getName(), Math.toDegrees(city.getLatitude()), Math.toDegrees(city.getLongitude())));
+        for (City city : cityList) {
+        	// System.out.println(city.toString()); // method in city class (if we would all information)
+        	System.out.println(city.getName() + ";");
         }
-
-        // Mélanger l'ordre des villes afin de ne pas avoir une population avec des individus semblables
-        Collections.shuffle(individual);
-               
-
-        // Ajouter l'individu à la population
-        this.population.add(individual);
+    	System.out.println( "\n");    
     }
+
+    // Display all individuals of the population 
+    public void displayPopulation() {
+    	
+        for (int i = 0; i < this.population.size(); i++) {
+        	
+            System.out.println("Population " + (i+1) + " :");
+            displayCities(this.population.get(i));
+            System.out.println();
+            System.out.println(" ------- Fitness : " + getFitness(i) + "-------\n");
+
+        }
+        
+       
+    }
+    
+    // ----------------------------------------------------------------------------------------------
+
+    // Getters : 
     
     public double getFitness( int i ) {
     	return this.tab_of_fitness[i];
     }
+    
+    public ArrayList<City> getListOfCities(){
+    	return this.cities_of_problem;
+    }
+    
+    public ArrayList<ArrayList<City>> getListOfPopulation(){
+    	return this.population;
+    }
+    
+    public int getSizeOfPopulation() {
+    	return this.size_of_population;
+    }
+    
+    public ArrayList<City> getIndividual( int i){
+    	return this.population.get(i);
+    }
+    
+   
+    // ----------------------------------------------------------------------------------------------
+    
+    // We should add a method to not add to identical individual  
+    
+    // ----------------------------------------------------------------------------------------------
 
-    // Initialiser la population avec le nombre d'individus spécifié
-    public void init() {
-        for (int i = 0; i < this.size_of_population; i++) {
-            createIndividual();
-            Fitness fitness = new Fitness();
-            fitness.ComputeFitness( this.population.get(i) );
-            this.tab_of_fitness[i] = fitness.getFitness();
+    // Create a new individual and add his to the population :
+    
+    public void createIndividual() {
+    	
+        ArrayList<City> individual = new ArrayList<>(); // New ArrayList of 'City' for modelize our individual
+
+        // Create a copy of the cities in our problem 
+        for (City city : this.cities_of_problem) {
+            individual.add(new City(city.getName(), Math.toDegrees(city.getLatitude()), Math.toDegrees(city.getLongitude())));
+        }
+
+        // shuffle our cities 
+        Collections.shuffle(individual);
+               
+
+        // add individual into our population 
+        this.population.add(individual);
+    }
+    
+    // ----------------------------------------------------------------------------------------------
+
+
+    // Initiate a new population : create individual and add to population 'this.size_of_population' times
+    public void newPopulation() { 
+    	
+        for ( int i = 0; i < this.size_of_population; i++ ) {
+        	
+            createIndividual(); // Create individual 
+            Fitness fitness = new Fitness(); // New Fitness
+            fitness.ComputeFitness( this.population.get(i) ); // Compute the fitness
+            this.tab_of_fitness[i] = fitness.getFitness(); // add fitness to the tab of fitness
             
         }
     }
-
-    // Afficher une liste de villes
-    public void displayCities(ArrayList<City> cityList) {
-        for (City city : cityList) {
-            System.out.println("Ville : " + city.getName() +
-                               "; Latitude : " + city.getLatitude() +
-                               "; Longitude : " + city.getLongitude());
-        }
-        
-
-    }
-
-    // Afficher toute la population
-    public void displayPopulation() {
-        for (int i = 0; i < this.population.size(); i++) {
-            System.out.println("Population " + i + " :");
-            displayCities(this.population.get(i));
-            System.out.println();
-            System.out.println("Fitness : " + getFitness(i) );
-
-        }
-        
-       
-    }
-
-    // Méthode principale pour tester
-    public static void main(String[] args) {
     
+    // ----------------------------------------------------------------------------------------------
 
-     
-        ArrayList<City> cities = new ArrayList<>();
-        cities.add(new City("Paris", 48.8566, 2.3522));
-        cities.add(new City("Marseille", 43.2965, 5.3698));
-        cities.add(new City("Lyon", 45.7640, 4.8357));
-        cities.add(new City("Toulouse", 43.6047, 1.4442));
-        cities.add(new City("Nice", 43.7102, 7.2620));
-        cities.add(new City("Strasbourg", 48.5734, 7.7521));
-        cities.add(new City("Montpellier", 43.6117, 3.8772));
-        cities.add(new City("Lille", 50.6292, 3.0573));
-        cities.add(new City("Reims", 49.2583, 4.0317));
-        cities.add(new City("Le Havre", 49.4944, 0.1079));
-        cities.add(new City("Saint-Étienne", 45.4397, 4.3872));
-        cities.add(new City("Toulon", 43.1242, 5.9280));
-        cities.add(new City("Grenoble", 45.1885, 5.7245));
-        cities.add(new City("Dijon", 47.3220, 5.0415));
-        cities.add(new City("Nîmes", 43.8375, 4.3601));
-        cities.add(new City("Bordeaux", 44.8378, -0.5792));
-        
-        cities.add(new City("Aix-en-Provence", 43.5297, 5.4474));
-        cities.add(new City("Clermont-Ferrand", 45.7772, 3.0870));
-        cities.add(new City("Tours", 47.3941, 0.6848));
-        cities.add(new City("Amiens", 49.8941, 2.2957));
-        cities.add(new City("Limoges", 45.8315, 1.2578));
-
-       
-        //Créer et initialiser la population
-        Population_init mypopulation = new Population_init(cities, 20);
-        mypopulation.init();
-        mypopulation.displayPopulation();
-        
-    }
 }
