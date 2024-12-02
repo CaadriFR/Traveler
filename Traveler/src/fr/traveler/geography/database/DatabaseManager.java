@@ -27,8 +27,16 @@ public class DatabaseManager {
 					int population = res.getInt("ville_population_2012");
 					double area = res.getDouble("ville_surface");
 					String department = res.getString("ville_departement");
-					City city = new City(name, postalCode, population, area, department);
+					double latitude = res.getDouble("ville_latitude_deg");
+					double longitude = res.getDouble("ville_longitude_deg");
+					City city = new City(name, postalCode, population, area, department, latitude, longitude);
 					cities.add(city);
+				}
+				try {
+					connection.close();
+					System.out.println("Connection to the database closed.");
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
 				return cities;
 

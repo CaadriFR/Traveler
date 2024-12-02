@@ -3,6 +3,7 @@ package fr.traveler;
 import java.util.List;
 
 import fr.traveler.geography.City;
+import fr.traveler.geography.Region;
 import fr.traveler.geography.database.DatabaseManager;
 
 public class Main {
@@ -16,7 +17,7 @@ public class Main {
 			System.out.println("List of cities:");
 			for (City city : cities) {
 				i++;
-				System.out.println(city.toString());
+				System.out.println(city.toString() + "\nRegion=" + Region.findRegionByCity(city).name());
 			}
 		}
 		System.out.println("Nombre de villes=" + i);
