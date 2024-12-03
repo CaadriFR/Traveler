@@ -1,5 +1,6 @@
 package fr.traveler.geography;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fr.traveler.geography.database.DatabaseManager;
@@ -16,6 +17,15 @@ public class GeographyManager {
 		}
 	}
 
+	public List<City> getCitiesByName(String name) {
+		List<City> foundCities = new ArrayList<>();
+		for (City city : cities) {
+			if (city.getName().equalsIgnoreCase(name))
+				foundCities.add(city);
+		}
+		return foundCities;
+	}
+	
 	public City getCity(String name, String department) {
 
 		for (City city : cities) {
