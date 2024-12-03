@@ -61,6 +61,10 @@ public class Population_init {
 	public double getFitness(int i) {
 		return this.tab_of_fitness[i];
 	}
+	
+	public double[] getTabFitness() {
+		return this.tab_of_fitness;
+	}
 
 	public ArrayList<City> getListOfCities() {
 		return this.cities_of_problem;
