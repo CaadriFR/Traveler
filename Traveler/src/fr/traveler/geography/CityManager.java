@@ -4,13 +4,13 @@ import java.util.List;
 
 public class CityManager {
 
-	public City getCity(String name, List<City> cities) {
+	public static City getCity(String name, List<City> cities) {
 
 		for (City city : cities) {
-			if (city.getName() == name)
+			if (city.getName().equalsIgnoreCase(name))
 				return city;
 		}
 		return null;
 	}
-
+	
 }

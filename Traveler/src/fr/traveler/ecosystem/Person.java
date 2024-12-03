@@ -20,13 +20,29 @@ public abstract class Person {
 		this.id = ++personCount;
 	}
 	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public int getID() {
+		return id;
+	}
+	
+	public int getAge() {
+		return age;
+	}
+	
 	public City getCity() {
-		return this.city;
+		return city;
 	}
 	
 	@Override
 	public String toString() {
-		return "Person [ID=" + this.id + ", Name=" + this.firstName + " " + this.lastName + ", Age=" + this.age
-				+ ", City=" + this.city + "]";
+		return "Person [ID=" + id + ", Name=" + firstName + " " + lastName + ", Age=" + age
+				+ ", City=" + city;
 	}
 }

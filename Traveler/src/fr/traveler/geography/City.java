@@ -34,16 +34,16 @@ public class City {
 	}
 	
 	public String getName() {
-		return this.name;
+		return name;
 	}
 	
 	public String getDepartment() {
-		return this.department;
+		return department;
 	}
 	
 	@Override
 	public String toString() {
-		return "City [Name=" + this.name + ", Postal Code=" + this.postalCode + ", Population=" + this.population + ", Area=" + this.area
-				+ " km2, Department=" + this.department + ", Latitude=" + this.latitude + ", Longitude=" + this.longitude + "]";
+		return "City [Name=" + name + ", Postal Code=" + postalCode + ", Population=" + population + ", Area=" + area
+				+ " km2, Department=" + department + ", Latitude=" + latitude + ", Longitude=" + longitude + "]";
 	}
 }

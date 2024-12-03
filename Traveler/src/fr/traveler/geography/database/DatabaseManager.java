@@ -21,8 +21,9 @@ public class DatabaseManager {
 				String query = "SELECT * FROM villes_france_free";
 				ResultSet res = statement.executeQuery(query);
 				List<City> cities = new ArrayList<>();
+				int count = 0;
 				while (res.next()) {
-					String name = res.getString("ville_nom");
+					String name = res.getString("ville_nom_reel");
 					String postalCode = res.getString("ville_code_postal");
 					int population = res.getInt("ville_population_2012");
 					double area = res.getDouble("ville_surface");
@@ -31,7 +32,9 @@ public class DatabaseManager {
 					double longitude = res.getDouble("ville_longitude_deg");
 					City city = new City(name, postalCode, population, area, department, latitude, longitude);
 					cities.add(city);
+					count++;
 				}
+				System.out.println("Number of cities=" + count);
 				try {
 					connection.close();
 					System.out.println("Connection to the database closed.");

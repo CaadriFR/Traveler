@@ -33,11 +33,15 @@ public enum Region {
         this.population = population;
         this.departments = departments;
     }
+    
+    public String getCapitalCity() {
+    	return capitalCity;
+    }
 
     @Override
     public String toString() {
-        return "Region [Name=" + name() + ", Capital City=" + this.capitalCity + ", Area=" + this.area + " km², Population=" 
-                + this.population + ", Departments=" + this.departments + "]";
+        return "Region [Name=" + name() + ", Capital City=" + capitalCity + ", Area=" + area + " km², Population=" 
+                + population + ", Departments=" + departments + "]";
     }
 
     public static Region findRegionByCity(City city) {
@@ -46,7 +50,6 @@ public enum Region {
                 return region;
             }
         }
-        System.out.println("Ville pas en France métropolitaine="+ city.getName());
         return Region.UNKNOWN;
     }
 }
