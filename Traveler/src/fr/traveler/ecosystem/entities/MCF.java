@@ -24,7 +24,7 @@ public class MCF extends Titular {
 	public String toString() {
 		String supervisedStudentName = "";
 		if (supervisedStudent != null)
-			supervisedStudentName += ", SupervisedStudent=" + supervisedStudent.getFirstName() + " "
+			supervisedStudentName += ", Supervised Student=" + supervisedStudent.getFirstName() + " "
 					+ supervisedStudent.getLastName();
 		return "MCF " + super.toString() + supervisedStudentName + "]";
 	}

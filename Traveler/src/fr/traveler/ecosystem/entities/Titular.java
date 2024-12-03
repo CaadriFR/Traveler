@@ -26,6 +26,6 @@ public abstract class Titular extends Person {
 
 	@Override
 	public String toString() {
-		return super.toString() + ", Disciplines=" + disciplines + ", OfficeNumber=" + officeNumber;
+		return super.toString() + ", Disciplines=" + disciplines + ", Office Number=" + officeNumber;
 	}
 }

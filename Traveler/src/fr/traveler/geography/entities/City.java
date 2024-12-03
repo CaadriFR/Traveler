@@ -17,16 +17,21 @@ public class City {
 		this.population = population;
 		this.area = area;
 		this.department = department;
-		this.latitude = Math.toRadians(latitude);
-		this.longitude = Math.toRadians(longitude);
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
-	public double calculateDistance(City otherCity) {
-	    double deltaLatitude = this.latitude - otherCity.latitude;
-	    double deltaLongitude = this.longitude - otherCity.longitude;
+	public double distanceTo(City otherCity) {
+		double thisLatitudeRad = Math.toRadians(this.latitude);
+        double thisLongitudeRad = Math.toRadians(this.longitude);
+        double otherLatitudeRad = Math.toRadians(otherCity.latitude);
+        double otherLongitudeRad = Math.toRadians(otherCity.longitude);
+        
+        double deltaLatitude = otherLatitudeRad - thisLatitudeRad;
+        double deltaLongitude = otherLongitudeRad - thisLongitudeRad;
 
 	    double temp = Math.pow(Math.sin(deltaLatitude / 2), 2) +
-	               Math.cos(this.latitude) * Math.cos(otherCity.latitude) *
+	               Math.cos(thisLatitudeRad) * Math.cos(otherLatitudeRad) *
 	               Math.pow(Math.sin(deltaLongitude / 2), 2);
 	    double distance = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(temp));
 

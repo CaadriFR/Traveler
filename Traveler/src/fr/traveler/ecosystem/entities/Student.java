@@ -41,7 +41,7 @@ public class Student extends Person {
 		String titularName = "";
 		if (titular != null)
 			titularName += ", Titular= " + titular.getFirstName() + " " + titular.getLastName();
-		return "Student " + super.toString() + ", ThesisSubject=" + thesisSubject + ", Discipline=" + discipline + ", Year="
+		return "Student " + super.toString() + ", Thesis Subject=" + thesisSubject + ", Discipline=" + discipline + ", Year="
 				+ thesisYear + titularName + "]";
 	}
 }

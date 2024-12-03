@@ -34,7 +34,7 @@ public class Researcher extends Titular {
 			if (!supervisedStudentsList.equalsIgnoreCase(""))
 				supervisedStudentsList += ", ";
 			else
-				supervisedStudentsList = ", SupervisedStudents=[";
+				supervisedStudentsList = ", Supervised Students=[";
 			supervisedStudentsList += supervisedStudent.getFirstName() + " " + supervisedStudent.getLastName();
 		}
 
