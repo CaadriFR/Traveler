@@ -1,4 +1,4 @@
-package fr.traveler.geography;
+package fr.traveler.geography.entities;
 
 import java.util.Collections;
 import java.util.List;

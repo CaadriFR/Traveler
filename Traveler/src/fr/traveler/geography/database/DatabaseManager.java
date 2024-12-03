@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import fr.traveler.geography.City;
+import fr.traveler.geography.entities.City;
 
 public class DatabaseManager {
 

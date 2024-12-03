@@ -1,6 +1,6 @@
-package fr.traveler.ecosystem;
+package fr.traveler.ecosystem.entities;
 
-import fr.traveler.geography.City;
+import fr.traveler.geography.entities.City;
 
 public abstract class Person {
 
@@ -19,30 +19,29 @@ public abstract class Person {
 		this.city = city;
 		this.id = ++personCount;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public int getID() {
 		return id;
 	}
-	
+
 	public int getAge() {
 		return age;
 	}
-	
+
 	public City getCity() {
 		return city;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Person [ID=" + id + ", Name=" + firstName + " " + lastName + ", Age=" + age
-				+ ", City=" + city;
+		return "[ID=" + id + ", Name=" + firstName + " " + lastName + ", Age=" + age + ", City=" + city.getName();
 	}
 }

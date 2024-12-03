@@ -1,4 +1,4 @@
-package fr.traveler.geography;
+package fr.traveler.geography.entities;
 
 public class City {
 	private String name;

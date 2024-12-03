@@ -2,6 +2,8 @@ package fr.traveler.geography;
 
 import java.util.List;
 
+import fr.traveler.geography.entities.City;
+
 public class CityManager {
 
 	public static City getCity(String name, List<City> cities) {
