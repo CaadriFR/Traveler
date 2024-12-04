@@ -19,6 +19,10 @@ public abstract class Person {
 		this.city = city;
 		this.id = ++personCount;
 	}
+	
+	public static int getPersonCount() {
+		return personCount;
+	}
 
 	public String getFirstName() {
 		return firstName;

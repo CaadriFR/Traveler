@@ -40,7 +40,7 @@ public enum Region {
     	return capitalCity;
     }
     
-    public String getcapitalDepartment() {
+    public String getCapitalDepartment() {
     	return capitalDepartment;
     }
 

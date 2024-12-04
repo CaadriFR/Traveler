@@ -58,34 +58,58 @@ public class EcosystemManager {
 		}
 	}
 
-	public Student getStudentById(int id) {
+	public List<Student> getStudentsByName(String firstName, String lastName) {
+		List<Student> foundStudents = new ArrayList<>();
 		for (Student student : students) {
-			if (student.getID() == id)
-				return student;
+			if (student.getFirstName().equalsIgnoreCase(firstName) && student.getLastName().equalsIgnoreCase(lastName))
+				foundStudents.add(student);
 		}
-		return null;
-
+		return foundStudents;
 	}
 
-	public Titular getTitularById(int id) {
+	public List<Titular> getTitularsByName(String firstName, String lastName) {
+		List<Titular> foundTitulars = new ArrayList<>();
 		for (Titular titular : titulars) {
-			if (titular.getID() == id)
-				return titular;
+			if (titular.getFirstName().equalsIgnoreCase(firstName) && titular.getLastName().equalsIgnoreCase(lastName))
+				foundTitulars.add(titular);
 		}
-		return null;
+		return foundTitulars;
+	}
 
+	public boolean canAssignTitular() {
+		if (students.isEmpty() || titulars.isEmpty())
+			return false;
+		boolean everyStudentsHasTitular = true;
+		for (Student student : students) {
+			if (student.getTitular() == null) {
+				everyStudentsHasTitular = false;
+				break;
+			}
+		}
+		boolean titularAvailable = false;
+		for (Titular titular : titulars) {
+			if (titular instanceof Researcher) {
+				titularAvailable = true;
+				break;
+			} else if (titular instanceof MCF && ((MCF) titular).getSupervisedStudent() == null) {
+				titularAvailable = true;
+				break;
+			}
+		}
+		return true && !everyStudentsHasTitular && titularAvailable;
 	}
 
 	public static void assignTitular(Student student, Titular titular) {
 		if (student.getTitular() != null) {
-			System.out.println(
-					"The student " + student.getFirstName() + " " + student.getLastName() + " already has a titular !");
+			System.out.println("The student " + student.getFirstName() + " " + student.getLastName() + " (ID="
+					+ student.getID() + ") already has a titular !");
 			return;
 		}
 		if (titular instanceof MCF) {
 			if (((MCF) titular).getSupervisedStudent() != null) {
 				System.out.println("The MCF " + titular.getFirstName() + " " + titular.getLastName()
-						+ " already supervises a student !");
+						+ " (ID="
+								+ titular.getID() + ") already supervises a student !");
 				return;
 			}
 			((MCF) titular).setSupervisedStudent(student);
@@ -94,6 +118,9 @@ public class EcosystemManager {
 			((Researcher) titular).addSupervisedStudent(student);
 		}
 		student.setTitular(titular);
+		System.out.println("The student " + student.getFirstName() + " " + student.getLastName() + " (ID="
+				+ student.getID() + ") is now supervised by " + titular.getFirstName() + " " + titular.getLastName()
+				+ " (ID=" + titular.getID() + ").");
 	}
 
 }

@@ -40,7 +40,7 @@ public class Student extends Person {
 	public String toString() {
 		String titularName = "";
 		if (titular != null)
-			titularName += ", Titular= " + titular.getFirstName() + " " + titular.getLastName();
+			titularName += ", Titular=" + titular.getFirstName() + " " + titular.getLastName() + " (ID=" + titular.getID() + ")";
 		return "Student " + super.toString() + ", Thesis Subject=" + thesisSubject + ", Discipline=" + discipline + ", Year="
 				+ thesisYear + titularName + "]";
 	}
