@@ -14,7 +14,7 @@ public class Population_init {
 	private ArrayList<ArrayList<City>> population = new ArrayList<>(); // ArrayList of ArrayList of 'City' : modelize
 																		// our population
 	private int size_of_population; // number of individuals we would for the first iteration of GeneticAlgorithm
-	private double[] tab_of_fitness; // tab of fitness : tab_of_fitness[i] it's the fitness of the individual in
+	private Fitness fitness; // tab of fitness : tab_of_fitness[i] it's the fitness of the individual in
 										// population[i]
 
 	// ----------------------------------------------------------------------------------------------
@@ -23,7 +23,15 @@ public class Population_init {
 	public Population_init(ArrayList<City> cities_of_problem, int size_of_population) {
 		this.cities_of_problem = cities_of_problem;
 		this.size_of_population = size_of_population;
-		this.tab_of_fitness = new double[size_of_population];
+		this.fitness = null;
+	}
+	
+	public Population_init(ArrayList<ArrayList<City>> population) {
+		this.size_of_population = population.size();
+		this.fitness = new Fitness(population);
+		this.fitness.ComputeFitness();
+		this.population = population;
+
 	}
 
 	// ----------------------------------------------------------------------------------------------
@@ -32,12 +40,11 @@ public class Population_init {
 	// Display Cities of an ArrayList of City
 	public void displayCities(ArrayList<City> cityList) {
 
+		String mystr="";
 		for (City city : cityList) {
-			// System.out.println(city.toString()); // method in city class (if we would all
-			// information)
-			System.out.println(city.getName() + ";");
+			mystr += city.getName() + ";";
 		}
-		System.out.println("\n");
+		System.out.println(mystr);
 	}
 
 	// Display all individuals of the population
@@ -45,9 +52,8 @@ public class Population_init {
 
 		for (int i = 0; i < this.population.size(); i++) {
 
-			System.out.println("Population " + (i + 1) + " :");
+			System.out.println("Individu " + (i) + " :");
 			displayCities(this.population.get(i));
-			System.out.println();
 			System.out.println(" ------- Fitness : " + getFitness(i) + "-------\n");
 
 		}
@@ -59,11 +65,11 @@ public class Population_init {
 	// Getters :
 
 	public double getFitness(int i) {
-		return this.tab_of_fitness[i];
+		return this.fitness.getFitness().get(i);
 	}
 	
-	public double[] getTabFitness() {
-		return this.tab_of_fitness;
+	public ArrayList<Double> getTabFitness() {
+		return this.fitness.getFitness();
 	}
 
 	public ArrayList<City> getListOfCities() {
@@ -82,6 +88,7 @@ public class Population_init {
 		return this.population.get(i);
 	}
 
+
 	// ----------------------------------------------------------------------------------------------
 
 	// We should add a method to not add to identical individual
@@ -96,12 +103,18 @@ public class Population_init {
 
 		// Create a copy of the cities in our problem
 		for (City city : this.cities_of_problem) {
-			individual.add(
-					new City(city.getName(), Math.toDegrees(city.getLatitude()), Math.toDegrees(city.getLongitude())));
+			individual.add(new City(city.getName(), Math.toDegrees(city.getLatitude()), Math.toDegrees(city.getLongitude())));
+			
 		}
+		
 
 		// shuffle our cities
 		Collections.shuffle(individual);
+		
+
+		//City temp = individual.get(0);
+		//individual.add( new City( temp.getName(), Math.toDegrees(temp.getLatitude()), Math.toDegrees(temp.getLongitude())));
+		
 
 		// add individual into our population
 		this.population.add(individual);
@@ -116,12 +129,16 @@ public class Population_init {
 		for (int i = 0; i < this.size_of_population; i++) {
 
 			createIndividual(); // Create individual
-			Fitness fitness = new Fitness(); // New Fitness
-			fitness.ComputeFitness(this.population.get(i)); // Compute the fitness
-			this.tab_of_fitness[i] = fitness.getFitness(); // add fitness to the tab of fitness
 
 		}
+		
+		this.fitness = new Fitness(this.population);
+		this.fitness.ComputeFitness();
 	}
+	
+	
+	
+
 
 	// ----------------------------------------------------------------------------------------------
 

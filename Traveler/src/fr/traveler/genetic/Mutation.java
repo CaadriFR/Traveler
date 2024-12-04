@@ -20,7 +20,7 @@ public class Mutation {
 	//----------------------------------------------------------------
 	//Getters : 
 	
-	public ArrayList<City> getChild1Prime(){
+	public ArrayList<City> getChildPrime(){
 		return this.child_prime;
 	}
 	
@@ -58,9 +58,9 @@ public class Mutation {
 				
 			} while( randomIndex_1 == randomIndex_2);
 			
-			System.out.println("Mumation de la ville de : " + 
-			this.child_prime.get(randomIndex_1).getName() + 
-			" avec la ville de : " + this.child_prime.get(randomIndex_2).getName() + "\n");
+			//System.out.println("Mumation de la ville de : " + 
+			//this.child_prime.get(randomIndex_1).getName() + 
+			//" avec la ville de : " + this.child_prime.get(randomIndex_2).getName() + "\n");
 			
 			City temp_city = this.child_prime.get(randomIndex_1);
 			this.child_prime.set( randomIndex_1, this.child_prime.get(randomIndex_2) );
@@ -69,8 +69,8 @@ public class Mutation {
 		}
 		
 		else {
-			System.out.println("Pas de mutation " + 
-			randomDouble +  " supérieur à " + this.prob_mutate + "\n");
+			//System.out.println("Pas de mutation " + 
+			//randomDouble +  " supérieur à " + this.prob_mutate + "\n");
 
 		}
 		

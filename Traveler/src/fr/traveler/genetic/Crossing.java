@@ -101,7 +101,6 @@ public class Crossing {
 			this.cycles.add(cycle);
 		}
 
-		System.out.println(this.cycles);
 
 	}
 

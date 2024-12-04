@@ -1,30 +1,58 @@
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Fitness {
-	private double fitness; // Fitness score
+	ArrayList<Double> fitness; // Fitness score
+	private int size;
+	ArrayList<ArrayList<City>> population;
 
-	public Fitness() {
-		this.fitness = -1; // Par défaut on initialise le fitness à -1
+	public Fitness( ArrayList<ArrayList<City>> population) {
+		this.population = population;
+		this.size = population.size();
+		this.fitness = new ArrayList<Double>();
+		 
 	}
+	
 
-	public double getFitness() {
+	
+
+	public ArrayList<Double>  getFitness() {
 		return this.fitness;
 	}
-
-	public void ComputeFitness(ArrayList<City> my_individual) {
-
-		double totalDistance = 0;
+	
+	public double totalDistance(ArrayList<City> my_individual) {
+		double mytotalDistance = 0;
 		int i = 0;
 		while (i < (my_individual.size()) - 1) {
 
-			totalDistance += my_individual.get(i).Haversine(my_individual.get(i + 1)); // calcule de la distance entre
-																						// la ville i et la ville i+1
+			mytotalDistance += my_individual.get(i).Haversine(my_individual.get(i + 1)); // calcule de la distance entre																			// la ville i et la ville i+1
 			i++;
 		}
-		totalDistance += my_individual.get(i).Haversine(my_individual.get(0)); // ajout du retour à la ville initiale
-		this.fitness = totalDistance / my_individual.size();
+		mytotalDistance += my_individual.get(i).Haversine(my_individual.get(0)); // ajout du retour à la ville initiale
+		return mytotalDistance;
+		
 	}
+
+	public void ComputeFitness() {
+		
+		
+		for( int i = 0; i<this.size; i++) {
+			this.fitness.add( totalDistance(this.population.get(i)) );
+		}
+		
+		double myMax = Collections.max(this.fitness);
+		
+		for( int j=0; j<this.size; j++) {
+			
+			
+			this.fitness.set(j, (100 - (this.fitness.get(j)*100) / myMax) + 100 );
+		}
+	
+		
+		
+	}
+	
 
 }
