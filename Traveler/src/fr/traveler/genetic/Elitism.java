@@ -54,7 +54,7 @@ public class Elitism {
             index.add(i);
         }
 		
-        index.sort(Comparator.comparingDouble(i -> fitness.get((int) i)).reversed());
+        index.sort(Comparator.comparingDouble(i -> fitness.get((int) i)));
 
 
         //index.sort((i1, i2) -> Double.compare(fitness[i2], fitness[i1]));
@@ -81,8 +81,6 @@ public class Elitism {
 		ArrayList<ArrayList<City>> new_populationOrdered = ReorderMyPopulation( this.new_population, this.fitnessNew);
 		
 
-		
-		
 		for( int i = 0; i < index_rateElite; i++) {
 			this.final_population.add(new_populationOrdered.get(i));
 		}

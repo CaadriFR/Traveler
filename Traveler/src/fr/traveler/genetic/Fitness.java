@@ -4,55 +4,57 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Fitness {
-	ArrayList<Double> fitness; // Fitness score
-	private int size;
+	
 	ArrayList<ArrayList<City>> population;
+	ArrayList<Double> fitness; // Fitness score
+	ArrayList<Double> distance; // Fitness score
+	private int size;
 
 	public Fitness( ArrayList<ArrayList<City>> population) {
 		this.population = population;
 		this.size = population.size();
 		this.fitness = new ArrayList<Double>();
+		this.distance = new ArrayList<Double>();
 		 
 	}
 	
-
-	
-
-	public ArrayList<Double>  getFitness() {
+	public ArrayList<Double> getFitness() {
 		return this.fitness;
 	}
 	
-	public double totalDistance(ArrayList<City> my_individual) {
-		double mytotalDistance = 0;
-		int i = 0;
-		while (i < (my_individual.size()) - 1) {
-
-			mytotalDistance += my_individual.get(i).Haversine(my_individual.get(i + 1)); // calcule de la distance entre																			// la ville i et la ville i+1
-			i++;
+	public static boolean isSame( double fitness, ArrayList<Double> tabOfFitness ) {
+		for( int i = 0; i<tabOfFitness.size(); i++) {
+			if( fitness == tabOfFitness.get(i) ) return true;
 		}
-		mytotalDistance += my_individual.get(i).Haversine(my_individual.get(0)); // ajout du retour à la ville initiale
-		return mytotalDistance;
-		
-	}
-
-	public void ComputeFitness() {
-		
-		
-		for( int i = 0; i<this.size; i++) {
-			this.fitness.add( totalDistance(this.population.get(i)) );
-		}
-		
-		double myMax = Collections.max(this.fitness);
-		
-		for( int j=0; j<this.size; j++) {
-			
-			
-			this.fitness.set(j, (100 - (this.fitness.get(j)*100) / myMax) + 100 );
-		}
-	
-		
+		return false;
 		
 	}
 	
+	public static double computeDistance( ArrayList<City> individual ) {
+		double myDistance=0;
+		int i;
+		for( i=0; i<individual.size() - 1; i++) {
+			myDistance += individual.get(i).Haversine(individual.get(i + 1));
+		}
+		myDistance += individual.get(i).Haversine(individual.get(0));
+		return myDistance;	
+	}
+	
+	public static double computeFitness( ArrayList<City> individual ) {
+		double myFitness = computeDistance(individual);
+		//myFitness = 
+		return myFitness;
+	}
+	
+	public void computeTabOfDistance() {
+		for( int i = 0 ; i < this.size; i++) {
+			this.distance.add( computeDistance( this.population.get(i) ) );	
+		}	
+	}
 
+	public void computeTabOfFitness() {
+		for( int i = 0; i < this.size; i++ ) {
+			this.fitness.add( computeFitness( this.population.get(i) ) );
+		}	
+	}
 }

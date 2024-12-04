@@ -65,8 +65,7 @@ public class Crossing {
 		for (int i = 0; i < this.size; i++) {
 			
 			if (current_city.getName().equals(parent2.get(i).getName())) {
-				return i;
-				
+				return i;	
 			}
 		}
 		return -1;
@@ -99,6 +98,7 @@ public class Crossing {
 			} while (current_index != index);
 
 			this.cycles.add(cycle);
+			
 		}
 
 
@@ -107,6 +107,7 @@ public class Crossing {
 	public void buildChilds() {
 
 		buildCycle();
+		System.out.println(this.cycles);
 
 		int randomInt;
 

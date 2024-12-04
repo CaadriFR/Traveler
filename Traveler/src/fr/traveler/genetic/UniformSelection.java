@@ -36,9 +36,10 @@ public class UniformSelection {
 		return this.parent2;
 	}
 	
-	public void FitnessPourcent() {
+	public void buildTabOfFitnessCumul() {
 		
 		double mysum=0;
+		
 		for( int i = 0; i < this.fitness.size() ; i++) {
 			mysum += this.fitness.get(i);	
 		}
@@ -57,30 +58,33 @@ public class UniformSelection {
 	
 	public void ChooseMyParent() {
 		
-		FitnessPourcent();
+		buildTabOfFitnessCumul();
 		
 		int myRandom= (int) ((Math.random() * 100)); 
+		
 		int indexOfParent1=0;
 		int indexOfParent2=0;
 		
-		
-
+		//System.out.println("Random 1 :");
+		//System.out.println(myRandom);
 		
 		while( true ) { // a modifier pour eviter pb boucle inf
 			if( this.fitness_cumul.get(indexOfParent1) <= myRandom  && this.fitness_cumul.get(indexOfParent1 +1)  > myRandom) {
 				break;
 			}
 			indexOfParent1++;
-
 		}
+		
+		//System.out.println("index 1 :" + indexOfParent1);
+
 		
 		this.parent1 = population.get(indexOfParent1);
 			
 		myRandom= (int) ((Math.random() * 100)); 
-	
-
-
 		
+		//System.out.println("Random 2 :");
+		//System.out.println(myRandom);
+	
 		while( true) {
 			if( this.fitness_cumul.get(indexOfParent2)  <= myRandom  && this.fitness_cumul.get(indexOfParent2 +1)  >= myRandom) {
 				if( indexOfParent2 == indexOfParent1 ) {
@@ -92,26 +96,11 @@ public class UniformSelection {
 				else break;
 			}
 			indexOfParent2++;
-
 		}
 		
-		this.parent2 = population.get(indexOfParent2);
-
+		//System.out.println("index 2 :" + indexOfParent2);
 		
-	
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		this.parent2 = population.get(indexOfParent2);	
 		
 	}
-	
-
-
 }

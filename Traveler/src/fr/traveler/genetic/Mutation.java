@@ -45,6 +45,7 @@ public class Mutation {
 	public void mutateChilds() {
 		
 		double randomDouble = Math.random(); 
+		
 		int randomIndex_1;
 		int randomIndex_2;
 		
