@@ -57,6 +57,13 @@ public class EcosystemManager {
 			System.out.println(person);
 		}
 	}
+	
+	public List<Person> getAllPersons() {
+	    List<Person> allPersons = new ArrayList<>();
+	    allPersons.addAll(students);
+	    allPersons.addAll(titulars);
+	    return allPersons;
+	}
 
 	public List<Student> getStudentsByName(String firstName, String lastName) {
 		List<Student> foundStudents = new ArrayList<>();
@@ -96,7 +103,7 @@ public class EcosystemManager {
 				break;
 			}
 		}
-		return true && !everyStudentsHasTitular && titularAvailable;
+		return !everyStudentsHasTitular && titularAvailable;
 	}
 
 	public static void assignTitular(Student student, Titular titular) {
@@ -107,9 +114,8 @@ public class EcosystemManager {
 		}
 		if (titular instanceof MCF) {
 			if (((MCF) titular).getSupervisedStudent() != null) {
-				System.out.println("The MCF " + titular.getFirstName() + " " + titular.getLastName()
-						+ " (ID="
-								+ titular.getID() + ") already supervises a student !");
+				System.out.println("The MCF " + titular.getFirstName() + " " + titular.getLastName() + " (ID="
+						+ titular.getID() + ") already supervises a student !");
 				return;
 			}
 			((MCF) titular).setSupervisedStudent(student);
@@ -122,5 +128,4 @@ public class EcosystemManager {
 				+ student.getID() + ") is now supervised by " + titular.getFirstName() + " " + titular.getLastName()
 				+ " (ID=" + titular.getID() + ").");
 	}
-
 }
