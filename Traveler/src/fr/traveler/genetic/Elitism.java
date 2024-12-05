@@ -71,7 +71,7 @@ public class Elitism {
 		
 		
 	}
-	
+		
 	public void BuildMyFinalPopulation() {
 		
 		int index_rateElite = (int) Math.ceil(this.rate_elite * this.new_population.size());
@@ -88,8 +88,8 @@ public class Elitism {
 		for( int j = index_rateElite; j < this.old_population.size(); j++) {
 			this.final_population.add(old_populationOrdered.get(j));
 		}
-		
-	
 	}
-
+	
 }
+
+

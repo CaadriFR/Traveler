@@ -1,60 +1,51 @@
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class Fitness {
+    private static final double EPSILON = 1e-6;
 	
-	ArrayList<ArrayList<City>> population;
-	ArrayList<Double> fitness; // Fitness score
-	ArrayList<Double> distance; // Fitness score
-	private int size;
-
-	public Fitness( ArrayList<ArrayList<City>> population) {
-		this.population = population;
-		this.size = population.size();
-		this.fitness = new ArrayList<Double>();
-		this.distance = new ArrayList<Double>();
-		 
-	}
-	
-	public ArrayList<Double> getFitness() {
-		return this.fitness;
-	}
-	
-	public static boolean isSame( double fitness, ArrayList<Double> tabOfFitness ) {
-		for( int i = 0; i<tabOfFitness.size(); i++) {
-			if( fitness == tabOfFitness.get(i) ) return true;
-		}
-		return false;
+	public static boolean isSame( double distance, ArrayList<Double> tabOfDistance ) {
+		for (double d : tabOfDistance) {
+            if (Math.abs(d - distance) < EPSILON) return true; 
+        }
+        return false;
 		
 	}
 	
 	public static double computeDistance( ArrayList<City> individual ) {
 		double myDistance=0;
-		int i;
-		for( i=0; i<individual.size() - 1; i++) {
-			myDistance += individual.get(i).Haversine(individual.get(i + 1));
+		for(int  i = 0 ; i < individual.size() - 1 ; i++) {
+			myDistance += individual.get(i).distanceTo(individual.get(i + 1));
 		}
-		myDistance += individual.get(i).Haversine(individual.get(0));
+		myDistance += individual.get(individual.size()-1).distanceTo(individual.get(0));
 		return myDistance;	
 	}
 	
-	public static double computeFitness( ArrayList<City> individual ) {
-		double myFitness = computeDistance(individual);
-		//myFitness = 
-		return myFitness;
+	public static  ArrayList<Double> computeTabOfDistance( ArrayList<ArrayList<City>> population) {
+		ArrayList<Double> distance = new ArrayList<Double>();
+		for (ArrayList<City> individual : population) {
+            distance.add(computeDistance(individual));
+        }
+        return distance;
 	}
 	
-	public void computeTabOfDistance() {
-		for( int i = 0 ; i < this.size; i++) {
-			this.distance.add( computeDistance( this.population.get(i) ) );	
-		}	
+	public static double minDistance( ArrayList<Double> distance ) {
+		double mymin=distance.get(0);
+		for( Double myDistance : distance ) {
+			if(myDistance < mymin) mymin = myDistance;
+		}
+		return mymin;
+		
 	}
-
-	public void computeTabOfFitness() {
-		for( int i = 0; i < this.size; i++ ) {
-			this.fitness.add( computeFitness( this.population.get(i) ) );
+	
+	public static ArrayList<Double> computeTabOfFitness( ArrayList<ArrayList<City>> population, ArrayList<Double> distance) {
+		double myFitness;
+		ArrayList<Double> fitness = new ArrayList<Double>();
+		for( int i = 0; i < population.size() ; i++ ) {
+			myFitness = distance.get(i);
+			fitness.add(myFitness);
 		}	
+		return fitness;
 	}
 }

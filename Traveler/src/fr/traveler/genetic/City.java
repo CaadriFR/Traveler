@@ -1,5 +1,7 @@
 package fr.traveler.genetic;
 
+import java.util.ArrayList;
+
 /*
  * Cette classe vise à représenter une ville.
  * Une ville possède un nom, une latitude et une longitude.
@@ -19,8 +21,8 @@ public class City {
 
 	public City(String city_name, double latitude, double longitude) {
 		this.city_name = city_name; // nom de la ville
-		this.latitude = Math.toRadians(longitude); // latitude de la ville transformée en radians
-		this.longitude = Math.toRadians(longitude); // longitude de la ville transformée en radians
+		this.latitude = latitude; // latitude de la ville transformée en radians
+		this.longitude = longitude; // longitude de la ville transformée en radians
 	}
 
 	// ----------------------------------------------------------------------------------------------
@@ -41,21 +43,37 @@ public class City {
 
 	// ----------------------------------------------------------------------------------------------
 
+	
+	// Display Cities of an ArrayList of City
+	public static void displayCities(ArrayList<City> individual ) {
+
+		String mystr="";
+		for (City city : individual ) {
+			mystr += city.getName() + "->";
+		}
+		mystr +=  individual.get(0).getName();
+		System.out.println(mystr);
+	}
+	
+	
+	
 	// Distance enter this.city and city2 by the Haversine formula
 
-	public double Haversine(City city2) {
+	public double distanceTo(City otherCity) {
+		double thisLatitudeRad = Math.toRadians(this.latitude);
+        double thisLongitudeRad = Math.toRadians(this.longitude);
+        double otherLatitudeRad = Math.toRadians(otherCity.latitude);
+        double otherLongitudeRad = Math.toRadians(otherCity.longitude);
+        
+        double deltaLatitude = otherLatitudeRad - thisLatitudeRad;
+        double deltaLongitude = otherLongitudeRad - thisLongitudeRad;
 
-		// difference of the latitude and longitude of this.city and city2
+	    double temp = Math.pow(Math.sin(deltaLatitude / 2), 2) +
+	               Math.cos(thisLatitudeRad) * Math.cos(otherLatitudeRad) *
+	               Math.pow(Math.sin(deltaLongitude / 2), 2);
+	    double distance = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(temp));
 
-		double deltaLatitude = (city2.latitude) - (this.latitude);
-		double deltaLongitude = (city2.longitude) - (this.longitude);
-
-		// Formula :
-		double a = Math.pow(Math.sin(deltaLatitude / 2), 2)
-				+ Math.cos(this.latitude) * Math.cos(city2.latitude) * Math.pow(Math.sin(deltaLongitude / 2), 2);
-
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		return EARTH_RADIUS * c;
+	    return distance;
 	}
 
 	@Override

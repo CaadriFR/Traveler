@@ -107,7 +107,6 @@ public class Crossing {
 	public void buildChilds() {
 
 		buildCycle();
-		System.out.println(this.cycles);
 
 		int randomInt;
 
