@@ -15,6 +15,7 @@ import fr.traveler.ecosystem.entities.Student;
 import fr.traveler.ecosystem.entities.Titular;
 import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
+import fr.traveler.geography.entities.Region;
 
 public class Main {
 
@@ -400,8 +401,7 @@ public class Main {
 			switch (choice) {
 			case 1:
 				Discipline disciplineFilter = addDisciplineInteractive(scanner);
-				List<Person> filter1 = filterPersons(ecosystemManager, 1, -1, disciplineFilter,
-						-1);
+				List<Person> filter1 = filterPersons(ecosystemManager, 1, -1, disciplineFilter, null, -1);
 				if (filter1.isEmpty()) {
 					System.out.println("No persons match the given criteria.");
 				} else {
@@ -412,8 +412,7 @@ public class Main {
 				}
 				break;
 			case 2:
-				List<Person> filter2 = filterPersons(ecosystemManager, 3, 55, null,
-						-1);
+				List<Person> filter2 = filterPersons(ecosystemManager, 3, 55, null, null, -1);
 				if (filter2.isEmpty()) {
 					System.out.println("No persons match the given criteria.");
 				} else {
@@ -424,8 +423,7 @@ public class Main {
 				}
 				break;
 			case 3:
-				List<Person> filter3 = filterPersons(ecosystemManager, 2, -1, null,
-						-1);
+				List<Person> filter3 = filterPersons(ecosystemManager, 2, -1, null, null, -1);
 				if (filter3.isEmpty()) {
 					System.out.println("No persons match the given criteria.");
 				} else {
@@ -436,7 +434,7 @@ public class Main {
 				}
 				break;
 			case 4:
-				performCustomCycle(ecosystemManager, scanner);
+				performCustomCycle(ecosystemManager, geographyManager, scanner);
 				continue;
 			case 5:
 				back = true;
@@ -448,7 +446,8 @@ public class Main {
 		}
 	}
 
-	private static void performCustomCycle(EcosystemManager ecosystemManager, Scanner scanner) {
+	private static void performCustomCycle(EcosystemManager ecosystemManager, GeographyManager geographyManager,
+			Scanner scanner) {
 		System.out.println("--- Custom Hamiltonian Cycle ---");
 
 		int typeChoice = -1;
@@ -504,6 +503,28 @@ public class Main {
 			}
 		}
 
+		Region regionFilter = null;
+		while (true) {
+			System.out.print("Filter by region? (yes/no): ");
+			String filterByRegion = scanner.nextLine().trim();
+			if (filterByRegion.equalsIgnoreCase("yes")) {
+				System.out.println("Available regions:");
+				for (Region region : Region.values()) {
+					System.out.println("- " + region.name());
+				}
+				try {
+					System.out.print("Enter the region: ");
+					String regionInput = scanner.nextLine().trim().toUpperCase();
+					regionFilter = Region.valueOf(regionInput);
+					break;
+				} catch (IllegalArgumentException e) {
+					System.out.println("Invalid region entered. Please try again.");
+				}
+			} else if (filterByRegion.equalsIgnoreCase("no")) {
+				break;
+			}
+		}
+
 		int thesisYear = -1;
 		if (typeChoice == 1) {
 			while (true) {
@@ -529,7 +550,7 @@ public class Main {
 		}
 
 		List<Person> filteredPersons = filterPersons(ecosystemManager, typeChoice, minAge, disciplineFilter,
-				thesisYear);
+				regionFilter, thesisYear);
 
 		if (filteredPersons.isEmpty()) {
 			System.out.println("No persons match the given criteria.");
@@ -542,7 +563,7 @@ public class Main {
 	}
 
 	private static List<Person> filterPersons(EcosystemManager ecosystemManager, int typeChoice, int minAge,
-			Discipline disciplineFilter, int thesisYear) {
+			Discipline disciplineFilter, Region regionFilter, int thesisYear) {
 		List<Person> filteredPersons = new ArrayList<>();
 
 		for (Person person : ecosystemManager.getAllPersons()) {
@@ -566,6 +587,11 @@ public class Main {
 					if (!((Titular) person).getDisciplines().contains(disciplineFilter))
 						continue;
 				}
+			}
+
+			if (regionFilter != null) {
+				if (Region.findRegionByCity(person.getCity()) != regionFilter)
+					continue;
 			}
 
 			if (person instanceof Student) {
