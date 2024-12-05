@@ -54,7 +54,7 @@ public class GeneticSolution {
 		int noImprovementCounter = 0;
         double bestDistance = Fitness.minDistance(mypopulation1.getTabOfDistance());
 		
-        for (int iteration = 0; iteration < 500000 && noImprovementCounter < 1000; iteration++) {
+        for (int iteration = 0; iteration < 500000 && noImprovementCounter < 2000; iteration++) {
 
 			
 			i++;
@@ -97,7 +97,7 @@ public class GeneticSolution {
 			mypopulation2.setTabOfDistance();
 			mypopulation2.setTabOfFitness();
 
-			myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), mypopulation1.getTabOfFitness() , mypopulation2.getTabOfFitness(), 0.3);
+			myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), mypopulation1.getTabOfFitness() , mypopulation2.getTabOfFitness(), 0.4);
 			myelite.BuildMyFinalPopulation();
 			
 			mypopulation1 = new Population( myelite.getFinalPopulation() );

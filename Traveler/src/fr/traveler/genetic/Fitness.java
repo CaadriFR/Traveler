@@ -43,7 +43,7 @@ public class Fitness {
 		double myFitness;
 		ArrayList<Double> fitness = new ArrayList<Double>();
 		for( int i = 0; i < population.size() ; i++ ) {
-			myFitness = distance.get(i);
+			myFitness = 10000 / distance.get(i)    ;
 			fitness.add(myFitness);
 		}	
 		return fitness;

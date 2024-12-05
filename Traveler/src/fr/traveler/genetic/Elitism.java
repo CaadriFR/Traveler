@@ -54,8 +54,7 @@ public class Elitism {
             index.add(i);
         }
 		
-        index.sort(Comparator.comparingDouble(i -> fitness.get((int) i)));
-
+        index.sort(Comparator.comparingDouble(i -> fitness.get((int) i)).reversed());
 
         //index.sort((i1, i2) -> Double.compare(fitness[i2], fitness[i1]));
         

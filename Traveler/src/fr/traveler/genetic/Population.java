@@ -43,6 +43,7 @@ public class Population {
 			System.out.println("Individual number : " + (i) + " : "); 
 			City.displayCities(this.population.get(i));
 			System.out.println(" DISTANCE : " + getDistance(i) );
+			System.out.println(" FITNESS : " + getFitness(i) );
 			System.out.println( );
 
 		}
