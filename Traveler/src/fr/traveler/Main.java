@@ -1,6 +1,9 @@
-package fr.traveler.genetic;
+package fr.traveler;
 
 import java.util.ArrayList;
+
+import fr.traveler.genetic.City;
+import fr.traveler.genetic.GeneticSolution;
 
 public class Main {
 
