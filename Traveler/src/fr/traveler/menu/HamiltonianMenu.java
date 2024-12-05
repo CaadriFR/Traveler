@@ -12,6 +12,7 @@ import fr.traveler.ecosystem.entities.Researcher;
 import fr.traveler.ecosystem.entities.Student;
 import fr.traveler.ecosystem.entities.Titular;
 import fr.traveler.genetic.GeneticManager;
+import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
 import fr.traveler.geography.entities.Region;
@@ -26,8 +27,9 @@ public class HamiltonianMenu {
 			System.out.println("1. Cycle to visit students in a given discipline");
 			System.out.println("2. Cycle to visit researchers over 55 years old");
 			System.out.println("3. Cycle to visit all titulars");
-			System.out.println("4. Custom cycle");
-			System.out.println("5. Go to Ecosystem Management Menu");
+			System.out.println("4. Cycle to visit everyone");
+			System.out.println("5. Custom cycle");
+			System.out.println("6. Go to Ecosystem Management Menu");
 			System.out.print("Choose an option: ");
 
 			int choice = -1;
@@ -41,42 +43,25 @@ public class HamiltonianMenu {
 			switch (choice) {
 			case 1:
 				Discipline disciplineFilter = MenuUtils.addDisciplineInteractive(scanner);
-				List<Person> filter1 = filterPersons(ecosystemManager, 1, -1, disciplineFilter, null, -1);
-				if (filter1.isEmpty()) {
-					System.out.println("No persons match the given criteria.");
-				} else {
-					System.out.println("Filtered persons:");
-					for (Person person : filter1) {
-						System.out.println(person);
-					}
-				}
+				List<Person> studentByDiscipline = filterPersons(ecosystemManager, 1, -1, disciplineFilter, null, -1);
+				prepareGeneticAlgorithm(ecosystemManager, geographyManager, studentByDiscipline);
 				break;
 			case 2:
-				List<Person> filter2 = filterPersons(ecosystemManager, 3, 55, null, null, -1);
-				if (filter2.isEmpty()) {
-					System.out.println("No persons match the given criteria.");
-				} else {
-					System.out.println("Filtered persons:");
-					for (Person person : filter2) {
-						System.out.println(person);
-					}
-				}
+				List<Person> olderResearcher = filterPersons(ecosystemManager, 3, 55, null, null, -1);
+				prepareGeneticAlgorithm(ecosystemManager, geographyManager, olderResearcher);
 				break;
 			case 3:
-				List<Person> filter3 = filterPersons(ecosystemManager, 2, -1, null, null, -1);
-				if (filter3.isEmpty()) {
-					System.out.println("No persons match the given criteria.");
-				} else {
-					System.out.println("Filtered persons:");
-					for (Person person : filter3) {
-						System.out.println(person);
-					}
-				}
+				List<Person> allTitulars = filterPersons(ecosystemManager, 2, -1, null, null, -1);
+				prepareGeneticAlgorithm(ecosystemManager, geographyManager, allTitulars);
 				break;
 			case 4:
+				List<Person> everyone = ecosystemManager.getAllPersons();
+				prepareGeneticAlgorithm(ecosystemManager, geographyManager, everyone);
+				break;
+			case 5:
 				performCustomCycle(ecosystemManager, geographyManager, scanner);
 				continue;
-			case 5:
+			case 6:
 				back = true;
 				break;
 			default:
@@ -191,29 +176,9 @@ public class HamiltonianMenu {
 
 		List<Person> filteredPersons = filterPersons(ecosystemManager, typeChoice, minAge, disciplineFilter,
 				regionFilter, thesisYear);
-		
-		List<City> citiesFromPersons = geographyManager.getCitiesFromPersons(filteredPersons);
-		
-		GeneticManager geneticManager = new GeneticManager(citiesFromPersons);
-		geneticManager.startGeneticAlgorithm(10);
-		
-		System.out.println("Solution : ");
-		for (City city : geneticManager.getSolution())
-			System.out.print(city.getName() + "->");
-		System.out.println();
-		System.out.println("Distance : ");
-		System.out.println(geneticManager.getDistance());
-		System.out.println("Fitness : ");
-		System.out.println(geneticManager.getFitness());
-		
-		if (filteredPersons.isEmpty()) {
-			System.out.println("No persons match the given criteria.");
-		} else {
-			System.out.println("Filtered persons:");
-			for (Person person : filteredPersons) {
-				System.out.println(person);
-			}
-		}
+
+		prepareGeneticAlgorithm(ecosystemManager, geographyManager, filteredPersons);
+
 	}
 
 	private static List<Person> filterPersons(EcosystemManager ecosystemManager, int typeChoice, int minAge,
@@ -257,6 +222,37 @@ public class HamiltonianMenu {
 		}
 
 		return filteredPersons;
+	}
+
+	private static void prepareGeneticAlgorithm(EcosystemManager ecosystemManager, GeographyManager geographyManager,
+			List<Person> persons) {
+		if (persons.isEmpty()) {
+			System.out.println("No persons match the given criteria.");
+			return;
+		} else if (persons.size() == 1){
+			System.out.println("There aren't enough persons in different cities who match your criteria in the ecosystem.");
+			return;
+		} else {
+			System.out.println("Filtered persons:");
+			for (Person person : persons) {
+				System.out.println(person);
+			}
+		}
+
+		List<City> citiesFromPersons = geographyManager.getCitiesFromPersons(persons);
+
+		GeneticManager geneticManager = new GeneticManager();
+		geneticManager.startGeneticAlgorithm(citiesFromPersons, citiesFromPersons.size()*3);
+
+		System.out.println("Solution : ");
+		Individu solution = geneticManager.getSolution();
+		for (City city : solution.getCycle())
+			System.out.print(city.getName() + "->");
+		System.out.println();
+		System.out.println("Distance : ");
+		System.out.println(solution.getDistance());
+		System.out.println("Fitness : ");
+		System.out.println(solution.getFitness());
 	}
 
 }

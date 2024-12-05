@@ -83,27 +83,40 @@ public class EcosystemMenu {
 		Discipline mathematics = Discipline.MATHEMATICS;
 		Discipline computerScience = Discipline.COMPUTER_SCIENCE;
 
-		Set<Discipline> disciplinesForMCF = new HashSet<>(List.of(mathematics));
-		Set<Discipline> disciplinesForResearcher = new HashSet<>(List.of(mathematics, computerScience));
-
-		ecosystemManager.addMCF("Alice", "Dupont", 40, geographyManager.getCity("Lille", "59"), disciplinesForMCF, 101);
-
-		ecosystemManager.addResearcher("Bob", "Martin", 55, geographyManager.getCity("Paris", "75"),
-				disciplinesForResearcher, 202);
-
-		ecosystemManager.addStudent("Charles", "Leclerc", 25, geographyManager.getCity("Lyon", "69"), "Algebra",
-				mathematics, 2);
-
-		ecosystemManager.addStudent("Diane", "Moreau", 28, geographyManager.getCity("Rouen", "76"), "AI",
-				computerScience, 3);
-
-		ecosystemManager.addStudent("Adrien", "Riffaut", 21, geographyManager.getCity("Orbec", "14"), "AI",
-				computerScience, 3);
-		ecosystemManager.addStudent("Adrien", "Riffaut", 23, geographyManager.getCity("Paris", "75"), "AI",
-				computerScience, 3);
-		ecosystemManager.addMCF("Neo", "Moret", 21, geographyManager.getCity("Orbec", "14"), disciplinesForMCF, 3);
-		ecosystemManager.addResearcher("Neo", "Moret", 25, geographyManager.getCity("Paris", "75"),
-				disciplinesForResearcher, 3);
+		ecosystemManager.addStudent("Emma", "Durand", 22, geographyManager.getCity("Caen", "14"), "Topology",
+		        mathematics, 1);
+		ecosystemManager.addStudent("Lucas", "Bernard", 24, geographyManager.getCity("Le Havre", "76"), "Cryptography",
+		        computerScience, 2);
+		ecosystemManager.addStudent("Sophie", "Lambert", 20, geographyManager.getCity("Quimper", "29"), "Geometry",
+		        mathematics, 1);
+		ecosystemManager.addStudent("Maxime", "Faure", 23, geographyManager.getCity("Vannes", "56"), "Data Science",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Julie", "Perrin", 21, geographyManager.getCity("La Rochelle", "17"), "Number Theory",
+		        mathematics, 2);
+		ecosystemManager.addStudent("Thomas", "Girard", 26, geographyManager.getCity("Bordeaux", "33"), "Machine Learning",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Clara", "Roux", 22, geographyManager.getCity("Pau", "64"), "Statistics",
+		        mathematics, 2);
+		ecosystemManager.addStudent("Hugo", "Masson", 27, geographyManager.getCity("Tarbes", "65"), "Artificial Intelligence",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Alice", "Fournier", 25, geographyManager.getCity("Perpignan", "66"), "Algebra",
+		        mathematics, 1);
+		ecosystemManager.addStudent("Paul", "Dumont", 28, geographyManager.getCity("Montpellier", "34"), "Cybersecurity",
+		        computerScience, 2);
+		ecosystemManager.addStudent("Léa", "Benoit", 22, geographyManager.getCity("Nîmes", "30"), "Functional Analysis",
+		        mathematics, 2);
+		ecosystemManager.addStudent("Antoine", "Renard", 21, geographyManager.getCity("Toulon", "83"), "Blockchain",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Camille", "Blanc", 24, geographyManager.getCity("Nice", "06"), "Combinatorics",
+		        mathematics, 1);
+		ecosystemManager.addStudent("Valentin", "Morel", 23, geographyManager.getCity("Annecy", "74"), "Quantum Computing",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Manon", "Simon", 22, geographyManager.getCity("Besançon", "25"), "Optimization",
+		        mathematics, 2);
+		ecosystemManager.addStudent("Nina", "Chevalier", 24, geographyManager.getCity("Strasbourg", "67"), "Neural Networks",
+		        computerScience, 3);
+		ecosystemManager.addStudent("Arthur", "Noel", 21, geographyManager.getCity("Metz", "57"), "Linear Algebra",
+		        mathematics, 1);
 
 		System.out.println("Default ecosystem successfully generated !");
 	}
