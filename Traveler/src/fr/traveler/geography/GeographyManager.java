@@ -3,6 +3,7 @@ package fr.traveler.geography;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.traveler.ecosystem.entities.Person;
 import fr.traveler.geography.database.DatabaseManager;
 import fr.traveler.geography.entities.City;
 
@@ -33,6 +34,16 @@ public class GeographyManager {
 				return city;
 		}
 		return null;
+	}
+	
+	public List<City> getCitiesFromPersons(List<Person> persons) {
+		List<City> citiesFromPersons = new ArrayList<>();
+		for (Person person : persons) {
+			City personCity = person.getCity();
+			if (!citiesFromPersons.contains(personCity))
+				citiesFromPersons.add(personCity);
+		}
+		return citiesFromPersons;
 	}
 	
 }

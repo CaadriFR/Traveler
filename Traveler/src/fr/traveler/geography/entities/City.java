@@ -1,5 +1,7 @@
 package fr.traveler.geography.entities;
 
+import java.util.List;
+
 public class City {
 	private String name;
 	private String postalCode;
@@ -36,6 +38,16 @@ public class City {
 	    double distance = 2 * EARTH_RADIUS * Math.asin(Math.sqrt(temp));
 
 	    return distance;
+	}
+	
+	public static void displayCities(List<City> individual ) {
+
+		String mystr="";
+		for (City city : individual ) {
+			mystr += city.getName() + "->";
+		}
+		mystr +=  individual.get(0).getName();
+		System.out.println(mystr);
 	}
 	
 	public String getName() {

@@ -1,17 +1,19 @@
 package fr.traveler.genetic;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import fr.traveler.geography.entities.City;
 
 public class Mutation {
 	
-	private ArrayList<City> child_prime;
+	private List<City> child_prime;
 	private double prob_mutate;
 	private int size;
 	
 	//---------------------------------------------------------------
 	//constructor
 	
-	public Mutation( ArrayList<City> child,  double prob_mutate) {
+	public Mutation( List<City> child,  double prob_mutate) {
 		this.child_prime = child;
 		this.prob_mutate = prob_mutate;
 		this.size = child.size();
@@ -20,7 +22,7 @@ public class Mutation {
 	//----------------------------------------------------------------
 	//Getters : 
 	
-	public ArrayList<City> getChildPrime(){
+	public List<City> getChildPrime(){
 		return this.child_prime;
 	}
 	

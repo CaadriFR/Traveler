@@ -2,28 +2,24 @@ package fr.traveler.genetic;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+
+import fr.traveler.geography.entities.City;
 
 public class Population {
 
-	private ArrayList<City> citiesOfProblem; 
-	private ArrayList<ArrayList<City>> population = new ArrayList<>(); 
-	private ArrayList<Double> fitness = new ArrayList<Double>();
-	private ArrayList<Double> distance = new ArrayList<Double>();
+	private List<City> citiesOfProblem; 
+	private List<List<City>> population = new ArrayList<>(); 
+	private List<Double> fitness = new ArrayList<Double>();
+	private List<Double> distance = new ArrayList<Double>();
 	private int sizeOfPopulation; 
 
-
-	// ----------------------------------------------------------------------------------------------
-
-	// Constructor :
-	
-	// initial population
-	public Population (ArrayList<City> citiesOfProblem, int sizeOfPopulation ) {
+	public Population (List<City> citiesOfProblem, int sizeOfPopulation ) {
 		this.citiesOfProblem = new ArrayList<>(citiesOfProblem);
 		this.sizeOfPopulation = sizeOfPopulation;
 	}
 	
-	// for recreate a population 
-	public Population (ArrayList<ArrayList<City>> population) {
+	public Population (List<List<City>> population) {
 		this.sizeOfPopulation = population.size();
 		this.population = population;
 	}
@@ -32,10 +28,6 @@ public class Population {
 		this.sizeOfPopulation = sizeOfPopulation;
 	}
 
-	// ----------------------------------------------------------------------------------------------
-	// DISPLAY
-
-	// Display all individuals of the population
 	public void displayAllPopulation() {
 
 		for (int i = 0; i < this.population.size(); i++) {
@@ -49,10 +41,6 @@ public class Population {
 		}
 	}
 
-	// ----------------------------------------------------------------------------------------------
-
-	// Getters :
-	
 	public double getFitness( int i ) {
 		return this.fitness.get(i);
 	}
@@ -65,28 +53,26 @@ public class Population {
 		return this.sizeOfPopulation;
 	}
 
-	public ArrayList<Double> getTabOfFitness() {
+	public List<Double> getTabOfFitness() {
 		return this.fitness;
 	}
 	
-	public ArrayList<Double> getTabOfDistance(){
+	public List<Double> getTabOfDistance(){
 		return this.distance;
 	}
 
-	public ArrayList<City> getListOfCities() {
+	public List<City> getListOfCities() {
 		return this.citiesOfProblem;
 	}
 
-	public ArrayList<ArrayList<City>> getPopulation() {
+	public List<List<City>> getPopulation() {
 		return this.population;
 	}
 
-	public ArrayList<City> getIndividual(int i) {
+	public List<City> getIndividual(int i) {
 		return this.population.get(i);
 	}
 	
-	// ----------------------------------------------------------------------------------------------
-
 	public boolean isNoSame( double myFitness, int currentIndex ) {
 		for( int i = 0 ; i < currentIndex ; i++ ) {
 			if( myFitness == this.getDistance(i)) return false;
@@ -94,47 +80,21 @@ public class Population {
 		return true;
 	}
 	
-	public void addIndividual( ArrayList<City> individual) {
+	public void addIndividual( List<City> individual) {
 		Double myDistance =  Fitness.computeDistance(individual);
 		this.population.add(individual);
 		this.distance.add(myDistance);
 	}
 	
-	/*
-	public ArrayList<City> createIndividualASuPPRIMERSIMARCHE() {
-		ArrayList<City> individual = new ArrayList<>(); 
-		for (City city : this.citiesOfProblem) {
-			individual.add( new City(city.getName(), city.getLatitude(), city.getLongitude()));
-		}
-		Collections.shuffle(individual);
-		return individual ;
-	}*/
-	
-    public ArrayList<City> createIndividual() {
-        ArrayList<City> individual = new ArrayList<>(this.citiesOfProblem);
+    public List<City> createIndividual() {
+        List<City> individual = new ArrayList<>(this.citiesOfProblem);
         Collections.shuffle(individual);
         return individual;
     }
 	
-    /*
-	public void newPopulationASupprimerSimarche() {
-		int i = 0;
-		while( i < this.sizeOfPopulation ) {
-			ArrayList<City> myIndividual = createIndividual(); 
-			double myDistance = Fitness.computeDistance(myIndividual);
-			if( isNoSame( myDistance, i) ) {
-				this.population.add(myIndividual);
-				this.distance.add(myDistance);
-			}
-			else continue;
-			i++;
-		}
-		this.fitness = Fitness.computeTabOfFitness(this.population, this.distance);
-	}*/
-	
     public void newPopulation() {
         while (this.population.size() < this.sizeOfPopulation) {
-            ArrayList<City> individual = createIndividual();
+            List<City> individual = createIndividual();
             double myDistance = Fitness.computeDistance(individual);
 
             if (!Fitness.isSame(myDistance, this.distance)) {

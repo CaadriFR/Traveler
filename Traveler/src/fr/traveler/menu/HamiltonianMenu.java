@@ -11,7 +11,9 @@ import fr.traveler.ecosystem.entities.Person;
 import fr.traveler.ecosystem.entities.Researcher;
 import fr.traveler.ecosystem.entities.Student;
 import fr.traveler.ecosystem.entities.Titular;
+import fr.traveler.genetic.GeneticManager;
 import fr.traveler.geography.GeographyManager;
+import fr.traveler.geography.entities.City;
 import fr.traveler.geography.entities.Region;
 
 public class HamiltonianMenu {
@@ -189,7 +191,21 @@ public class HamiltonianMenu {
 
 		List<Person> filteredPersons = filterPersons(ecosystemManager, typeChoice, minAge, disciplineFilter,
 				regionFilter, thesisYear);
-
+		
+		List<City> citiesFromPersons = geographyManager.getCitiesFromPersons(filteredPersons);
+		
+		GeneticManager geneticManager = new GeneticManager(citiesFromPersons);
+		geneticManager.startGeneticAlgorithm(10);
+		
+		System.out.println("Solution : ");
+		for (City city : geneticManager.getSolution())
+			System.out.print(city.getName() + "->");
+		System.out.println();
+		System.out.println("Distance : ");
+		System.out.println(geneticManager.getDistance());
+		System.out.println("Fitness : ");
+		System.out.println(geneticManager.getFitness());
+		
 		if (filteredPersons.isEmpty()) {
 			System.out.println("No persons match the given criteria.");
 		} else {

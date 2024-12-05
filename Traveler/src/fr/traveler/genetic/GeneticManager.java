@@ -1,18 +1,23 @@
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class GeneticSolution {
+import fr.traveler.geography.entities.City;
+
+public class GeneticManager {
 	
-	private ArrayList<City> hamiltonienSolution;
+	private List<City> hamiltonienSolution;
 	private double fitness;
 	private double distance;
+	private List<City> individu;
 	
-	public GeneticSolution() {
+	public GeneticManager(List<City> individu) {
 		this.hamiltonienSolution = new ArrayList<City>();
+		this.individu = individu;
 	}
 	
-	public ArrayList<City> getSolution() {
+	public List<City> getSolution() {
 		return this.hamiltonienSolution;
 	}
 	
@@ -24,12 +29,9 @@ public class GeneticSolution {
 		return this.fitness;
 	}
 	
-	
-	
-	
-	public void GeneticAlgorithm( ArrayList<City> citiesOfProblem, int sizeOfPopulation) {
+	public void startGeneticAlgorithm(int sizeOfPopulation) {
 		
-		Population mypopulation1 = new Population(citiesOfProblem, sizeOfPopulation);
+		Population mypopulation1 = new Population(this.individu, sizeOfPopulation);
 		Population mypopulation2;
 		UniformSelection selection;
 		Crossing mycross;
@@ -37,10 +39,10 @@ public class GeneticSolution {
 		Mutation mymutation2;
 		Elitism myelite;
 	
-		ArrayList<City> parent1;
-		ArrayList<City> parent2;
-		ArrayList<City> child1;
-		ArrayList<City> child2;
+		List<City> parent1;
+		List<City> parent2;
+		List<City> child1;
+		List<City> child2;
 		
 		//double fitnessChild1;
 		//double fitnessChild2;
@@ -81,13 +83,6 @@ public class GeneticSolution {
 				mymutation1.mutateChilds();
 				mymutation1.mutateChilds();
 				
-				//fitnessChild1 = Fitness.computeDistance(mymutation1.getChildPrime());
-				//fitnessChild2 = Fitness.computeDistance(mymutation2.getChildPrime());
-
-				//if (Fitness.isSame(fitnessChild1,mypopulation2.getTabOfFitness()) || Fitness.isSame( fitnessChild2,mypopulation2.getTabOfFitness() )) {
-					//continue;	
-				//}
-				
 				mypopulation2.addIndividual(mymutation1.getChildPrime());
 				mypopulation2.addIndividual(mymutation2.getChildPrime());
 				j++;
@@ -112,7 +107,6 @@ public class GeneticSolution {
 	        } else {
 	        	noImprovementCounter++;
 	        }
-					
 	
 		} 
 		
@@ -124,10 +118,6 @@ public class GeneticSolution {
 		
 		mypopulation1.displayAllPopulation();
 
-		
-
-		
-		
 	}
 
 }

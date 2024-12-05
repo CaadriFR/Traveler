@@ -1,16 +1,19 @@
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import fr.traveler.geography.entities.City;
 
 public class UniformSelection {
 	
-	private ArrayList<ArrayList<City>> population;
-	private ArrayList<Double> fitness;
-	private ArrayList<Double> fitness_cumul;
-	private ArrayList<City> parent1;
-	private ArrayList<City> parent2;
+	private List<List<City>> population;
+	private List<Double> fitness;
+	private List<Double> fitness_cumul;
+	private List<City> parent1;
+	private List<City> parent2;
 	
-	public UniformSelection( ArrayList<ArrayList<City>> population, ArrayList<Double> fitness ) {
+	public UniformSelection( List<List<City>> population, List<Double> fitness ) {
 		this.population = population;
 		this.fitness = fitness;
 		this.fitness_cumul = new ArrayList<Double>();
@@ -18,21 +21,21 @@ public class UniformSelection {
 		this.parent2 = null;
 	}
 	
-	public ArrayList<ArrayList<City>> getPopulation(){
+	public List<List<City>> getPopulation(){
 		return this.population;
 	}
 	
 	
-	public ArrayList<Double> getTabFitnessCumul() {
+	public List<Double> getTabFitnessCumul() {
 		return this.fitness_cumul;
 	}
 	
 	
-	public ArrayList<City> getParent1(){
+	public List<City> getParent1(){
 		return this.parent1;
 	}
 	
-	public ArrayList<City> getParent2(){
+	public List<City> getParent2(){
 		return this.parent2;
 	}
 	

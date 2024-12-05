@@ -1,27 +1,30 @@
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import fr.traveler.geography.entities.City;
 
 public class Crossing {
 
-	private ArrayList<City> parent1; //modelize parent1
-	private ArrayList<City> parent2; //modelize parent2
-	private ArrayList<City> child1;	 //modelize child1
-	private ArrayList<City> child2; //modelize child2
-	private ArrayList<ArrayList<Integer>> cycles; //modelize the cycles fort the implementation of child1 and child2
+	private List<City> parent1; //modelize parent1
+	private List<City> parent2; //modelize parent2
+	private List<City> child1;	 //modelize child1
+	private List<City> child2; //modelize child2
+	private List<List<Integer>> cycles; //modelize the cycles fort the implementation of child1 and child2
 	private int size;
 
 	
 // ------------------------------------------------------------------------------
 //Constructor : 
 	
-	public Crossing(ArrayList<City> parent1, ArrayList<City> parent2) {
+	public Crossing(List<City> parent1, List<City> parent2) {
 
 		this.parent1 = parent1;
 		this.parent2 = parent2;
 		this.child1 = new ArrayList<City>();
 		this.child2 = new ArrayList<City>();
-		this.cycles = new ArrayList<ArrayList<Integer>>(); //each ArrayList of Integer modelize a cycle : a cycle it's a suite of index that correspond to the place of the city in parent1 wich is imposed
+		this.cycles = new ArrayList<List<Integer>>(); //each List of Integer modelize a cycle : a cycle it's a suite of index that correspond to the place of the city in parent1 wich is imposed
 		this.size = parent1.size(); //size of individual
 
 		//Initialization of our child
@@ -34,23 +37,23 @@ public class Crossing {
 //---------------------------------------------------------------------------------------
 //getters 
 	
-	public ArrayList<City> getChild1() {
+	public List<City> getChild1() {
 		return this.child1;
 	}
 
-	public ArrayList<City> getChild2() {
+	public List<City> getChild2() {
 		return this.child2;
 	}
 	
-	public ArrayList<City> getParent1(){
+	public List<City> getParent1(){
 		return this.parent1;
 	}
 	
-	public ArrayList<City> getParent2(){
+	public List<City> getParent2(){
 		return this.parent2;
 	}
 
-	public ArrayList<ArrayList<Integer>> getCycles(){
+	public List<List<Integer>> getCycles(){
 		return this.cycles;
 	}
 	
@@ -61,7 +64,7 @@ public class Crossing {
 //---------------------------------------------------------------------------------
 	
 	//method who return the index of 'current_city' in parent2; -1 of not in
-	public int getIndex(City current_city, ArrayList<City> parent2) {
+	public int getIndex(City current_city, List<City> parent2) {
 		for (int i = 0; i < this.size; i++) {
 			
 			if (current_city.getName().equals(parent2.get(i).getName())) {
@@ -72,7 +75,7 @@ public class Crossing {
 	}
 	
 	//buildCycle is the mother method of this class 
-	//we build a arraylist of integer (cycle) that correspond of the placement imposed by 
+	//we build a List of integer (cycle) that correspond of the placement imposed by 
 	//the form of parent1 and parent2
 
 	public void buildCycle() {
@@ -85,7 +88,7 @@ public class Crossing {
 			if (isVisited[index])
 				continue;
 
-			ArrayList<Integer> cycle = new ArrayList<>();
+			List<Integer> cycle = new ArrayList<>();
 			int current_index = index;
 
 			do {
@@ -110,7 +113,7 @@ public class Crossing {
 
 		int randomInt;
 
-		for (ArrayList<Integer> cycle : this.cycles) {
+		for (List<Integer> cycle : this.cycles) {
 
 			randomInt = (int) (Math.random() * 2);
 
