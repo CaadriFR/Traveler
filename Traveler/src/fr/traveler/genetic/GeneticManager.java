@@ -3,6 +3,7 @@ package fr.traveler.genetic;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.traveler.config.Config;
 import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.entities.City;
 
@@ -40,12 +41,12 @@ public class GeneticManager {
 		int noImprovementCounter = 0;
 		double bestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
 
-		for (int iteration = 0; iteration < 500000 && noImprovementCounter < 20000; iteration++) {
+		for (int iteration = 0; iteration < Config.MAX_ITERATIONS && noImprovementCounter < Config.STAGNATION; iteration++) {
 			
 			i++;
 			j = 0;
 
-			mypopulation2 = new Population(citiesOfProblem, size);
+			mypopulation2 = new Population(size);
 
 			while (j < mypopulation1.getSize() / 2) {
 
@@ -70,7 +71,7 @@ public class GeneticManager {
 			}
 			mypopulation2.computeAllDistances();
 
-			myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), 0.35);
+			myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), Config.ELITISM);
 			myelite.BuildMyFinalPopulation();
 
 			mypopulation1 = new Population(myelite.getFinalPopulation());
@@ -90,8 +91,8 @@ public class GeneticManager {
 		System.out.println("Itérations :" + i);
 
 		this.individu = mypopulation1.getPopulation().getFirst();
-
 		mypopulation1.displayAllPopulation();
+		
 
 	}
 

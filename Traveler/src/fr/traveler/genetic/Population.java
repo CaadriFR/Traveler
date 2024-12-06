@@ -10,16 +10,20 @@ public class Population {
 
 	private List<City> citiesOfProblem;
 	private int size;
-	private List<Individu> population;
+	private List<Individu> population = new ArrayList<>();
 
-	public Population(List<City> citiesOfProblem, int size) {
+	public Population (List<City> citiesOfProblem, int size ) {
 		this.citiesOfProblem = new ArrayList<>(citiesOfProblem);
-		this.population = new ArrayList<>();
 		this.size = size;
 	}
-
-	public Population(List<Individu> population) {
+	
+	public Population (List<Individu> population) {
+		this.size = population.size();
 		this.population = population;
+	}
+	
+	public Population(int size) {
+		this.size = size;
 	}
 
 	public void displayAllPopulation() {
@@ -41,10 +45,6 @@ public class Population {
 
 	public List<Individu> getPopulation() {
 		return population;
-	}
-
-	public void Individu(Individu individu) {
-		this.population.add(individu);
 	}
 
 	public void computeAllDistances() {

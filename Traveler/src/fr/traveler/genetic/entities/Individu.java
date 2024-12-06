@@ -3,6 +3,7 @@ package fr.traveler.genetic.entities;
 import java.util.Collections;
 import java.util.List;
 
+import fr.traveler.config.Config;
 import fr.traveler.geography.entities.City;
 
 public class Individu {
@@ -15,7 +16,7 @@ public class Individu {
 		if (!cycle.isEmpty())
 			computeDistance();
 	}
-	
+
 	public double getDistance() {
 		return distance;
 	}
@@ -35,7 +36,7 @@ public class Individu {
 
 	public void computeDistance() {
 		double distance = 0;
-		for (int i = 0; i < cycle.size() - 1; i++) {
+		for (int i = 0; i < this.cycle.size() - 1; i++) {
 			distance += this.cycle.get(i).distanceTo(cycle.get(i + 1));
 		}
 		distance += this.cycle.getLast().distanceTo(cycle.getFirst());
@@ -43,12 +44,15 @@ public class Individu {
 	}
 
 	public void displayCities() {
-
+		if (this.cycle.isEmpty()) {
+			System.out.println("This cycle is empty.");
+			return;
+		}
 		String cities = "";
 		for (City city : this.cycle) {
 			cities += city.getName() + "->";
 		}
-		cities += this.cycle.getFirst();
+		cities += this.cycle.getFirst().getName();
 		System.out.println(cities);
 	}
 
@@ -59,7 +63,7 @@ public class Individu {
 		int randomIndex_1;
 		int randomIndex_2;
 
-		if (randomDouble <= 0.15) {
+		if (randomDouble <= Config.MUTATION) {
 
 			do {
 				randomIndex_1 = (int) (Math.random() * this.cycle.size());

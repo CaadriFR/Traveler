@@ -1,9 +1,5 @@
 package fr.traveler.geography.entities;
 
-import java.util.List;
-
-import fr.traveler.genetic.entities.Individu;
-
 public class City {
 	private String name;
 	private String postalCode;

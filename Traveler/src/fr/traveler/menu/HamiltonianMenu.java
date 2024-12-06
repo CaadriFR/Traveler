@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import fr.traveler.config.Config;
 import fr.traveler.ecosystem.EcosystemManager;
 import fr.traveler.ecosystem.entities.Discipline;
 import fr.traveler.ecosystem.entities.MCF;
@@ -242,12 +243,11 @@ public class HamiltonianMenu {
 		List<City> citiesFromPersons = geographyManager.getCitiesFromPersons(persons);
 
 		GeneticManager geneticManager = new GeneticManager();
-		geneticManager.startGeneticAlgorithm(citiesFromPersons, citiesFromPersons.size()*3);
+		geneticManager.startGeneticAlgorithm(citiesFromPersons, Config.SIZE_POPULATION);
 
 		System.out.println("Solution : ");
 		Individu solution = geneticManager.getSolution();
-		for (City city : solution.getCycle())
-			System.out.print(city.getName() + "->");
+		solution.displayCities();
 		System.out.println();
 		System.out.println("Distance : ");
 		System.out.println(solution.getDistance());

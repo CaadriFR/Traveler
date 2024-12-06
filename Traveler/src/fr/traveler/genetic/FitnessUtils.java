@@ -7,7 +7,7 @@ import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.entities.City;
 
 public class FitnessUtils {
-	private static final double EPSILON = 1e-6;
+	private static final double EPSILON = 10;
 
 	public static boolean hasSimilarIndividu(double distance, List<Individu> population) {
 		for (Individu individu : population) {
