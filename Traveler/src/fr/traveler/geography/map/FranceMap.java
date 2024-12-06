@@ -3,7 +3,6 @@ package fr.traveler.geography.map;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,13 +20,11 @@ public class FranceMap extends JPanel {
 
 	public FranceMap(List<City> cities) {
 		this.cities = cities;
-
 		try {
-			// Change ici l'endroit sur ton ordi
-			mapImage = ImageIO.read(new File("/Users/adrienriffaut/Desktop/Projet/geo_dep.png"));
+		    mapImage = ImageIO.read(getClass().getResourceAsStream("/france.png"));
 		} catch (IOException e) {
-			System.err.println("Erreur : Impossible de charger l'image.");
-			e.printStackTrace();
+		    System.err.println("Erreur : Impossible de charger l'image.");
+		    e.printStackTrace();
 		}
 	}
 
