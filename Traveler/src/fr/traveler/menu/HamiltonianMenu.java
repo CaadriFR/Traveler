@@ -17,6 +17,7 @@ import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
 import fr.traveler.geography.entities.Region;
+import fr.traveler.geography.map.FranceMap;
 
 public class HamiltonianMenu {
 
@@ -253,6 +254,8 @@ public class HamiltonianMenu {
 		System.out.println(solution.getDistance());
 		System.out.println("Fitness : ");
 		System.out.println(solution.getFitness());
+		
+		FranceMap.showMap(solution.getCycle());
 	}
 
 }

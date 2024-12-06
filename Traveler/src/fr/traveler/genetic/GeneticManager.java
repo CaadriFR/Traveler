@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.traveler.config.Config;
 import fr.traveler.genetic.entities.Individu;
+import fr.traveler.genetic.entities.Population;
 import fr.traveler.geography.entities.City;
 
 public class GeneticManager {

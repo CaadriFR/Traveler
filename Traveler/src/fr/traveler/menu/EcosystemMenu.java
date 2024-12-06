@@ -83,7 +83,7 @@ public class EcosystemMenu {
 		Discipline mathematics = Discipline.MATHEMATICS;
 		Discipline computerScience = Discipline.COMPUTER_SCIENCE;
 
-		/*ecosystemManager.addStudent("Marie", "Simon", 21, geographyManager.getCity("Pau", "64"), "Combinatorics",
+		ecosystemManager.addStudent("Marie", "Simon", 21, geographyManager.getCity("Pau", "64"), "Combinatorics",
 		        mathematics, 1);
 		ecosystemManager.addStudent("Nicolas", "Vidal", 24, geographyManager.getCity("Toulouse", "31"), "Distributed Systems",
 		        computerScience, 3);
@@ -145,10 +145,10 @@ public class EcosystemMenu {
 		        computerScience, 3);
 		ecosystemManager.addStudent("Louis", "Gonzalez", 22, geographyManager.getCity("Biarritz", "64"), "Machine Learning",
 		        computerScience, 2);
-		*/
 		
 		
-		 ecosystemManager.addStudent("Emma", "Durand", 22, geographyManager.getCity("Caen", "14"), "Topology",
+		
+		 /*ecosystemManager.addStudent("Emma", "Durand", 22, geographyManager.getCity("Caen", "14"), "Topology",
 		        mathematics, 1);
 		ecosystemManager.addStudent("Clara", "Roux", 22, geographyManager.getCity("Pau", "64"), "Statistics",
 		        mathematics, 2);
@@ -181,7 +181,7 @@ public class EcosystemMenu {
 		ecosystemManager.addStudent("Léa", "Benoit", 22, geographyManager.getCity("Nîmes", "30"), "Functional Analysis",
 		        mathematics, 2);
 		ecosystemManager.addStudent("Arthur", "Noel", 21, geographyManager.getCity("Metz", "57"), "Linear Algebra",
-		        mathematics, 1);
+		        mathematics, 1);*/
 		 
 		System.out.println("Default ecosystem successfully generated !");
 	}

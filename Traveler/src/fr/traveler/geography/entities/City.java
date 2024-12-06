@@ -38,6 +38,14 @@ public class City {
 		return distance;
 	}
 
+	public double getLatitude() {
+		return latitude;
+	}
+	
+	public double getLongitude() {
+		return longitude;
+	}
+	
 	public String getName() {
 		return name;
 	}
