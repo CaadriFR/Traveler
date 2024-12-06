@@ -255,7 +255,7 @@ public class HamiltonianMenu {
 		System.out.println("Fitness : ");
 		System.out.println(solution.getFitness());
 		
-		FranceMap.showMap(solution.getCycle());
+		FranceMap.showMapWithGraph(solution.getCycle(), geneticManager.getDistanceEvolution());
 	}
 
 }

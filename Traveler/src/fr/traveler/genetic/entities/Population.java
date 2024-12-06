@@ -5,6 +5,7 @@ import java.util.List;
 
 import fr.traveler.genetic.FitnessUtils;
 import fr.traveler.geography.entities.City;
+import fr.traveler.geography.map.FranceMap;
 
 public class Population {
 
@@ -29,7 +30,6 @@ public class Population {
 	public void displayAllPopulation() {
 		int count = 1;
 		for (Individu individu : population) {
-
 			System.out.println("Individual number : " + (count++) + " : ");
 			individu.displayCities();
 			System.out.println(" DISTANCE : " + individu.getDistance());
@@ -89,7 +89,7 @@ public class Population {
 	}
 
 	public void newPopulation() {
-	    int heuristicIndividuals = (int) Math.ceil(0.3 * this.size);
+	    int heuristicIndividuals = (int) Math.ceil(0.1 * this.size);
 
 	    for (int i = 0; i < heuristicIndividuals; i++) {
 	        Individu individu = createIndividu();

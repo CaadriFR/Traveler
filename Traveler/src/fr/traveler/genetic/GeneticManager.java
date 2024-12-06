@@ -11,13 +11,19 @@ import fr.traveler.geography.entities.City;
 public class GeneticManager {
 
 	private Individu individu;
+	private List<Double> fitnessEvolution;
 
 	public GeneticManager() {
 		this.individu = new Individu(new ArrayList<>());
+		this.fitnessEvolution = new ArrayList<>();
 	}
 
 	public Individu getSolution() {
 		return this.individu;
+	}
+	
+	public List<Double> getDistanceEvolution() {
+		return this.fitnessEvolution;
 	}
 
 	public void startGeneticAlgorithm(List<City> citiesOfProblem, int size) {
@@ -41,7 +47,7 @@ public class GeneticManager {
 
 		int noImprovementCounter = 0;
 		double bestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
-
+		fitnessEvolution.add(10000 /bestDistance);
 		for (int iteration = 0; iteration < Config.MAX_ITERATIONS && noImprovementCounter < Config.STAGNATION; iteration++) {
 			
 			i++;
@@ -79,7 +85,7 @@ public class GeneticManager {
 			mypopulation1.computeAllDistances();
 
 			double currentBestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
-
+			fitnessEvolution.add(10000 /currentBestDistance);
 			if (currentBestDistance < bestDistance) {
 				bestDistance = currentBestDistance;
 				noImprovementCounter = 0;
@@ -92,7 +98,6 @@ public class GeneticManager {
 		System.out.println("Itérations :" + i);
 
 		this.individu = mypopulation1.getPopulation().getFirst();
-		mypopulation1.displayAllPopulation();
 		
 
 	}
