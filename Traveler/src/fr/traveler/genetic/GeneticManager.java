@@ -85,7 +85,7 @@ public class GeneticManager {
 			mypopulation1.computeAllDistances();
 
 			double currentBestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
-			fitnessEvolution.add(10000 /currentBestDistance);
+			fitnessEvolution.add(10000 / currentBestDistance);
 			if (currentBestDistance < bestDistance) {
 				bestDistance = currentBestDistance;
 				noImprovementCounter = 0;

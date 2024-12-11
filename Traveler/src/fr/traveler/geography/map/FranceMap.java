@@ -28,8 +28,6 @@ public class FranceMap extends JPanel {
         }
     }
     
-    
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

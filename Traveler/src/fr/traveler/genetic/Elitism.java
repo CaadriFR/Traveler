@@ -68,7 +68,7 @@ public class Elitism {
 			this.final_population.add(new_populationOrdered.get(i));
 		}
 
-		for (int j = index_rateElite; j < this.old_population.size(); j++) {
+		for (int j = 0; j < this.old_population.size() - index_rateElite; j++) {
 			this.final_population.add(old_populationOrdered.get(j));
 		}
 	}
