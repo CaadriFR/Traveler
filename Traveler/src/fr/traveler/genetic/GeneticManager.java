@@ -1,3 +1,12 @@
+/**
+ * Classe principale du package Genetic.
+ * Cette classe implémente l'algorithme génétique pour résoudre le problème du voyageur de commerce.
+ * 
+ * L'algorithme est implémenté par l'appel successif des différentes méthodes présentes dans les classes
+ * du package `genetic`.
+ * 
+ * @author Néo Moret
+ */
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
@@ -10,96 +19,126 @@ import fr.traveler.geography.entities.City;
 
 public class GeneticManager {
 
-	private Individu individu;
-	private List<Double> fitnessEvolution;
+    private Individu individu;
+    private List<Double> fitnessEvolution;
 
-	public GeneticManager() {
-		this.individu = new Individu(new ArrayList<>());
-		this.fitnessEvolution = new ArrayList<>();
-	}
+    /**
+     * Constructeur de la classe {@code GeneticManager}.
+     * Initialise la solution et l'évolution des fitness au cours des itérations.
+     */
+    public GeneticManager() {
+        this.individu = new Individu(new ArrayList<>());
+        this.fitnessEvolution = new ArrayList<>();
+    }
 
-	public Individu getSolution() {
-		return this.individu;
-	}
-	
-	public List<Double> getFitnessEvolution() {
-		return this.fitnessEvolution;
-	}
+    /**
+     * Getter pour la solution.
+     * 
+     * @return L'individu correspondant à la solution du problème du voyageur de commerce.
+     */
+    public Individu getSolution() {
+        return this.individu;
+    }
 
-	public void startGeneticAlgorithm(List<City> citiesOfProblem, int size) {
+    /**
+     * Getter pour l'évolution des fitness.
+     * 
+     * @return Une liste de doubles représentant l'évolution des fitness au fil des itérations.
+     */
+    public List<Double> getFitnessEvolution() {
+        return this.fitnessEvolution;
+    }
 
-		Population mypopulation1 = new Population(citiesOfProblem, size);
-		Population mypopulation2;
-		UniformSelection selection;
-		Crossing mycross;
-		Elitism myelite;
+    /**
+     * Méthode principale de la classe, implémentant l'algorithme génétique.
+     * 
+     * Cette méthode exécute l'algorithme selon les étapes suivantes :
+     * <ul>
+     *   <li>Initialisation de la population</li>
+     *   <li>Choix des parents</li>
+     *   <li>Opérations de croisement et de mutation</li>
+     *   <li>Application de l'élitisme pour former la population suivante</li>
+     *   <li>Calcul des distances et mise à jour de la meilleure solution</li>
+     * </ul>
+     * 
+     * L'algorithme s'arrête lorsque le nombre maximal d'itérations est atteint ou lorsqu'il
+     * n'y a plus d'améliorations pendant une période définie.
+     * 
+     * @param citiesOfProblem Liste des villes à parcourir pour résoudre le problème.
+     * @param size Taille de la population initiale à créer.
+     */
+    public void startGeneticAlgorithm(List<City> citiesOfProblem, int size) {
 
-		Individu parent1;
-		Individu parent2;
-		Individu child1;
-		Individu child2;
+        Population mypopulation1 = new Population(citiesOfProblem, size);
+        Population mypopulation2;
+        UniformSelection selection;
+        Crossing mycross;
+        Elitism myelite;
 
-		mypopulation1.newPopulation();
-		mypopulation1.displayBestIndividu();
+        Individu parent1;
+        Individu parent2;
+        Individu child1;
+        Individu child2;
 
-		int i = 0;
-		int j;
+        mypopulation1.newPopulation();
+        mypopulation1.displayBestIndividu();
 
-		int noImprovementCounter = 0;
-		double bestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
-		fitnessEvolution.add(10000 /bestDistance);
-		for (int iteration = 0; iteration < Config.MAX_ITERATIONS && noImprovementCounter < Config.STAGNATION; iteration++) {
-			
-			i++;
-			j = 0;
+        int i = 0;
+        int j;
 
-			mypopulation2 = new Population(size);
+        int noImprovementCounter = 0;
+        double bestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
+        fitnessEvolution.add(10000 / bestDistance);
 
-			while (j < mypopulation1.getSize() / 2) {
+        for (int iteration = 0; iteration < Config.MAX_ITERATIONS && noImprovementCounter < Config.STAGNATION; iteration++) {
 
-				selection = new UniformSelection(mypopulation1.getPopulation());
-				selection.ChooseMyParent();
+            i++;
+            j = 0;
 
-				parent1 = selection.getParent1();
-				parent2 = selection.getParent2();
+            mypopulation2 = new Population(size);
 
-				mycross = new Crossing(parent1, parent2);
-				mycross.buildChilds();
-				child1 = mycross.getChild1();
-				child2 = mycross.getChild2();
+            while (j < mypopulation1.getSize() / 2) {
 
-				child1.mutate();
-				child2.mutate();
+                selection = new UniformSelection(mypopulation1.getPopulation());
+                selection.ChooseMyParent();
 
-				mypopulation2.getPopulation().add(child1);
-				mypopulation2.getPopulation().add(child2);
-				j++;
+                parent1 = selection.getParent1();
+                parent2 = selection.getParent2();
 
-			}
-			mypopulation2.computeAllDistances();
+                mycross = new Crossing(parent1, parent2);
+                mycross.buildChilds();
+                child1 = mycross.getChild1();
+                child2 = mycross.getChild2();
 
-			myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), Config.ELITISM);
-			myelite.BuildMyFinalPopulation();
+                child1.mutate();
+                child2.mutate();
 
-			mypopulation1 = new Population(myelite.getFinalPopulation());
-			mypopulation1.computeAllDistances();
+                mypopulation2.getPopulation().add(child1);
+                mypopulation2.getPopulation().add(child2);
+                j++;
 
-			double currentBestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
-			fitnessEvolution.add(10000 / currentBestDistance);
-			if (currentBestDistance < bestDistance) {
-				bestDistance = currentBestDistance;
-				noImprovementCounter = 0;
-			} else {
-				noImprovementCounter++;
-			}
+            }
+            mypopulation2.computeAllDistances();
 
-		}
+            myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), Config.ELITISM);
+            myelite.BuildMyFinalPopulation();
 
-		System.out.println("Itérations :" + i);
+            mypopulation1 = new Population(myelite.getFinalPopulation());
+            mypopulation1.computeAllDistances();
 
-		this.individu = mypopulation1.getPopulation().getFirst();
-		
+            double currentBestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
+            fitnessEvolution.add(10000 / currentBestDistance);
+            if (currentBestDistance < bestDistance) {
+                bestDistance = currentBestDistance;
+                noImprovementCounter = 0;
+            } else {
+                noImprovementCounter++;
+            }
 
-	}
+        }
 
+        System.out.println("Itérations :" + i);
+
+        this.individu = mypopulation1.getPopulation().getFirst();
+    }
 }

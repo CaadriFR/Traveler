@@ -12,12 +12,33 @@ import javax.swing.JPanel;
 
 import fr.traveler.geography.entities.City;
 
+/**
+ * Représente une carte de la France affichant un itinéraire passant par les villes spécifiées du cycle hamiltonien.
+ * 
+ * @author Adrien Riffaut
+ * @author Néo Moret
+ */
 public class FranceMap extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	
+	/**
+     * Image de la carte de la France.
+     */
 	private BufferedImage mapImage;
+	
+	 /**
+     * Liste des villes à afficher sur la carte dans l'ordre de l'itinéraire.
+     */
 	private List<City> cities;
 
+	
+	/**
+     * Construit une instance de FranceMap avec une liste de villes spécifiées.
+     * Charge également l'image de la carte.
+     * 
+     * @param cities la liste des villes à afficher
+     */
 	public FranceMap(List<City> cities) {
 		this.cities = cities;
 		try {
@@ -28,6 +49,12 @@ public class FranceMap extends JPanel {
 		}
 	}
 
+	/**
+     * Dessine la carte de la France ainsi que les villes et les lignes les reliant.
+     * Les villes sont représentées par des cercles bleus, et l'itinéraire est en rouge.
+     * 
+     * @param g l'objet {@link Graphics} utilisé pour dessiner les composants
+     */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -61,6 +88,16 @@ public class FranceMap extends JPanel {
 		}
 	}
 
+	/**
+     * Convertit les coordonnées géographiques (latitude et longitude) en coordonnées de pixels sur l'image.
+     * @see <a href="https://fr.m.wikipedia.org/wiki/Fichier:Carte_France_geo_dep2.png">Wikipedia</a>
+     * 
+     * @param lat         la latitude
+     * @param lon         la longitude
+     * @param imageWidth  la largeur de l'image
+     * @param imageHeight la hauteur de l'image
+     * @return un tableau contenant les coordonnées X et Y en pixels
+     */
 	private int[] geoToPixel(double lat, double lon, int imageWidth, int imageHeight) {
 		int x = (int) ((0.067304 * lon + 0.348547) * imageWidth);
 		int y = (int) ((-0.097507 * lat + 5.009050) * imageWidth);

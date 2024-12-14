@@ -26,8 +26,20 @@ import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
 import fr.traveler.geography.entities.Region;
 
+/**
+ * Menu interactif pour la gestion des cycles hamiltoniens.
+ * 
+ * @author Adrien Riffaut
+ */
 public class HamiltonianMenu {
 
+	/**
+	 * Affiche le menu de sélection des cycles hamiltoniens.
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 */
 	public static void displayHamiltonianMenu(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 		boolean back = false;
@@ -76,6 +88,12 @@ public class HamiltonianMenu {
 		}
 	}
 
+	/**
+	 * Ajoute une région de manière interactive.
+	 * 
+	 * @param scanner l'objet {@link Scanner} pour la saisie utilisateur
+	 * @return la région sélectionnée
+	 */
 	private static Region addRegionInteractive(Scanner scanner) {
 		while (true) {
 			try {
@@ -88,6 +106,14 @@ public class HamiltonianMenu {
 		}
 	}
 
+	/**
+	 * Permet à l'utilisateur de générer un cycle personnalisé selon des critères
+	 * sur l'écosystème.
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 */
 	private static void performCustomCycle(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 		System.out.println("--- Custom Hamiltonian Cycle ---");
@@ -219,6 +245,18 @@ public class HamiltonianMenu {
 
 	}
 
+	/**
+	 * Filtre les personnes de l'écosystème en fonction des critères spécifiés.
+	 * 
+	 * @param ecosystemManager   le gestionnaire de l'écosystème
+	 * @param typeChoice         le type de personne à filtrer 
+	 * @param minAge             l'âge minimum des personnes à inclure
+	 * @param disciplineFilter   la discipline à filtrer
+	 * @param regionsFilter      les régions à filtrer
+	 * @param thesisYear         l'année de thèse (pour les étudiants uniquement)
+	 * @param supervisingStudent filtre les titulaires supervisant des étudiants (pour les titulaires uniquement)
+	 * @return une liste des personnes correspondant aux critères
+	 */
 	private static List<Person> filterPersons(EcosystemManager ecosystemManager, int typeChoice, int minAge,
 			Discipline disciplineFilter, Set<Region> regionsFilter, int thesisYear, boolean supervisingStudent) {
 		List<Person> filteredPersons = new ArrayList<>();
@@ -280,6 +318,13 @@ public class HamiltonianMenu {
 		return filteredPersons;
 	}
 
+	/**
+     * Prépare et exécute l'algorithme génétique pour un cycle hamiltonien.
+     * 
+     * @param ecosystemManager le gestionnaire de l'écosystème
+     * @param geographyManager le gestionnaire géographique
+     * @param persons          la liste des personnes à inclure dans le cycle
+     */
 	private static void prepareGeneticAlgorithm(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			List<Person> persons) {
 		if (persons.isEmpty()) {
@@ -313,8 +358,14 @@ public class HamiltonianMenu {
 		showMapWithGraph(solution.getCycle(), geneticManager.getFitnessEvolution());
 	}
 
+	/**
+     * Affiche la carte et le graphique des valeurs de fitness pour la solution trouvée.
+     * 
+     * @param cities         la liste des villes du cycle
+     * @param fitnessValues  la liste des valeurs de fitness de l'algorithme
+     */
 	private static void showMapWithGraph(List<City> cities, List<Double> fitnessValues) {
-		cities.add(cities.getFirst());
+		cities.add(cities.get(0));
 
 		JFrame frame = new JFrame("Map and Fitness Graph");
 		frame.setLayout(new GridLayout(1, 2));

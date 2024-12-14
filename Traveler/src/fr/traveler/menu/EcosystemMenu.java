@@ -16,8 +16,21 @@ import fr.traveler.ecosystem.entities.Titular;
 import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
 
+/**
+ * Gère les menus interactifs pour la gestion de l'écosystème.
+ * Permet de modifier l'écosystème.
+ * 
+ * @author Adrien Riffaut
+ */
 public class EcosystemMenu {
 
+	/**
+     * Affiche le menu principal pour la gestion de l'écosystème.
+     * 
+     * @param ecosystemManager le gestionnaire de l'écosystème
+     * @param geographyManager le gestionnaire géographique
+     * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+     */
 	public static void displayEcosystemMenu(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 		boolean exit = false;
@@ -78,6 +91,12 @@ public class EcosystemMenu {
 		}
 	}
 
+	/**
+     * Configure l'écosystème par défaut en ajoutant des chercheurs et des étudiants.
+     * 
+     * @param ecosystemManager le gestionnaire de l'écosystème
+     * @param geographyManager le gestionnaire géographique
+     */
 	private static void setupDefaultEcosystem(EcosystemManager ecosystemManager, GeographyManager geographyManager) {
 		Discipline mathematics = Discipline.MATHEMATICS;
 		Discipline computerScience = Discipline.COMPUTER_SCIENCE;
@@ -132,7 +151,6 @@ public class EcosystemMenu {
 		ecosystemManager.addStudent("Pierre", "Dubois", 22, geographyManager.getCity("Blois", "41"), "Artificial Intelligence", computerScience, 2, researcher);
 		ecosystemManager.addStudent("Sarah", "Baron", 23, geographyManager.getCity("Chartres", "28"), "Distributed Systems", computerScience, 3, researcher);
 		ecosystemManager.addStudent("Léa", "Fabre", 24, geographyManager.getCity("Mulhouse", "68"), "Cryptography", computerScience, 2, researcher);
-		
 		ecosystemManager.addStudent("Antoine", "Charpentier", 22, geographyManager.getCity("Agen", "47"), "Cryptography", computerScience, 2, researcher);
 		ecosystemManager.addStudent("Sophie", "Collin", 21, geographyManager.getCity("Ajaccio", "2A"), "Topology", mathematics, 1, researcher);
 		ecosystemManager.addStudent("Léo", "Dubois", 23, geographyManager.getCity("Angoulême", "16"), "Distributed Systems", computerScience, 3, researcher);
@@ -172,49 +190,18 @@ public class EcosystemMenu {
 		ecosystemManager.addStudent("Amélie", "Duval", 22, geographyManager.getCity("Vesoul", "70"), "Differential Equations", mathematics, 1, researcher);
 		ecosystemManager.addStudent("Lilian", "Lambert", 20, geographyManager.getCity("Villeneuve-sur-Lot", "47"), "Machine Learning", computerScience, 3, researcher);
 		ecosystemManager.addStudent("Marine", "Simon", 24, geographyManager.getCity("Yssingeaux", "43"), "Distributed Systems", computerScience, 3, researcher);
-		
-		
-		
-		 /*ecosystemManager.addStudent("Emma", "Durand", 22, geographyManager.getCity("Caen", "14"), "Topology",
-		        mathematics, 1);
-		ecosystemManager.addStudent("Clara", "Roux", 22, geographyManager.getCity("Pau", "64"), "Statistics",
-		        mathematics, 2);
-		ecosystemManager.addStudent("Hugo", "Masson", 27, geographyManager.getCity("Tarbes", "65"), "Artificial Intelligence",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Antoine", "Renard", 21, geographyManager.getCity("Toulon", "83"), "Blockchain",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Lucas", "Bernard", 24, geographyManager.getCity("Le Havre", "76"), "Cryptography",
-		        computerScience, 2);
-		ecosystemManager.addStudent("Sophie", "Lambert", 20, geographyManager.getCity("Quimper", "29"), "Geometry",
-		        mathematics, 1);
-		ecosystemManager.addStudent("Maxime", "Faure", 23, geographyManager.getCity("Vannes", "56"), "Data Science",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Julie", "Perrin", 21, geographyManager.getCity("La Rochelle", "17"), "Number Theory",
-		        mathematics, 2);
-		ecosystemManager.addStudent("Thomas", "Girard", 26, geographyManager.getCity("Bordeaux", "33"), "Machine Learning",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Camille", "Blanc", 24, geographyManager.getCity("Nice", "06"), "Combinatorics",
-		        mathematics, 1);
-		ecosystemManager.addStudent("Valentin", "Morel", 23, geographyManager.getCity("Annecy", "74"), "Quantum Computing",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Manon", "Simon", 22, geographyManager.getCity("Besançon", "25"), "Optimization",
-		        mathematics, 2);
-		ecosystemManager.addStudent("Nina", "Chevalier", 24, geographyManager.getCity("Strasbourg", "67"), "Neural Networks",
-		        computerScience, 3);
-		ecosystemManager.addStudent("Alice", "Fournier", 25, geographyManager.getCity("Perpignan", "66"), "Algebra",
-		        mathematics, 1);
-		ecosystemManager.addStudent("Paul", "Dumont", 28, geographyManager.getCity("Montpellier", "34"), "Cybersecurity",
-		        computerScience, 2);
-		ecosystemManager.addStudent("Léa", "Benoit", 22, geographyManager.getCity("Nîmes", "30"), "Functional Analysis",
-		        mathematics, 2);
-		ecosystemManager.addStudent("Arthur", "Noel", 21, geographyManager.getCity("Metz", "57"), "Linear Algebra",
-		        mathematics, 1);
-		ecosystemManager.addStudent("Adrien", "Riffaut", 21, geographyManager.getCity("Orbec", "14"), "Linear Algebra",
-		        mathematics, 1);*/
 		 
 		System.out.println("Default ecosystem successfully generated !");
 	}
 
+	/**
+	 * Ajoute une ville de manière interactive en fonction des entrées de l'utilisateur.
+	 * Permet à l'utilisateur de rechercher une ville par son nom et, si nécessaire, de spécifier le département.
+	 * 
+	 * @param geographyManager le gestionnaire géographique contenant les données des villes
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 * @return la ville sélectionnée par l'utilisateur
+	 */
 	private static City addCityInteractive(GeographyManager geographyManager, Scanner scanner) {
 		while (true) {
 			System.out.print("Enter the city name where the student resides: ");
@@ -237,11 +224,20 @@ public class EcosystemMenu {
 				}
 				System.out.println("City not found for the specified department. Please try again.");
 			} else {
-				return foundCities.getFirst();
+				return foundCities.get(0);
 			}
 		}
 	}
 	
+	/**
+	 * Permet à l'utilisateur de sélectionner un titulaire de manière interactive.
+	 * L'utilisateur entre le prénom et le nom du titulaire, et en cas d'ambiguïté,
+	 * une liste est affichée pour sélectionner le titulaire par son identifiant.
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 * @return le titulaire sélectionné par l'utilisateur
+	 */
 	private static Titular getTitularInteractive(EcosystemManager ecosystemManager, Scanner scanner) {
 
 		Titular titular = null;
@@ -284,13 +280,20 @@ public class EcosystemMenu {
 					System.out.println(
 							"Titular \"" + firstName + " " + lastName + "\" (ID=" + titularID + ") have been found.");
 			} else {
-				titular = foundTitulars.getFirst();
+				titular = foundTitulars.get(0);
 			}
 		}
 
 		return titular;
 	}
 
+	/**
+     * Ajoute un étudiant à l'écosystème via une saisie interactive de l'utilisateur.
+     * 
+     * @param ecosystemManager le gestionnaire de l'écosystème
+     * @param geographyManager le gestionnaire géographique
+     * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+     */
 	private static void addStudentInteractive(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 
@@ -352,6 +355,16 @@ public class EcosystemMenu {
 		ecosystemManager.addStudent(student);
 	}
 
+	/**
+	 * Ajoute un titulaire (MCF ou chercheur) de manière interactive.
+	 * L'utilisateur entre les informations du titulaire, telles que son prénom,
+	 * nom, âge, ville, disciplines et numéro de bureau.
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 * @param titularType      le type de titulaire à ajouter (MCF ou chercheur)
+	 */
 	private static void addTitularInteractive(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner, String titularType) {
 		System.out.println("--- Add a " + titularType + " ---");
@@ -415,12 +428,28 @@ public class EcosystemMenu {
 		}
 
 	}
-
+	
+	/**
+	 * Ajoute un maître de conférences (MCF) de manière interactive.
+	 * Utilise la méthode générique {@link #addTitularInteractive} en précisant le type "MCF".
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 */
 	private static void addMCFInteractive(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 		addTitularInteractive(ecosystemManager, geographyManager, scanner, "MCF");
 	}
 
+	/**
+	 * Ajoute un chercheur de manière interactive. Utilise la méthode générique
+	 * {@link #addTitularInteractive} en précisant le type "Researcher".
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param scanner          l'objet {@link Scanner} pour la saisie utilisateur
+	 */
 	private static void addResearcherInteractive(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			Scanner scanner) {
 		addTitularInteractive(ecosystemManager, geographyManager, scanner, "Researcher");

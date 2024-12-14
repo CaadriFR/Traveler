@@ -10,8 +10,19 @@ import java.util.List;
 
 import fr.traveler.geography.entities.City;
 
+/**
+ * Gère les interactions avec la base de données.
+ * 
+ * @author Adrien Riffaut
+ */
 public class DatabaseManager {
 
+	 /**
+     * Récupère toutes les villes de la base de données.
+     * Les informations sont extraites de la table {@code villes_france_free}.
+     * 
+     * @return une liste des villes récupérées, ou une liste vide si aucune ville n'est trouvée ou en cas d'erreur
+     */
 	public static List<City> getCities() {
 		Connection connection = DatabaseConnection.getConnection();
 		if (connection != null) {

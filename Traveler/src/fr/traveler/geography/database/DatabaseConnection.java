@@ -6,8 +6,18 @@ import java.sql.SQLException;
 
 import fr.traveler.config.Config;
 
+/**
+ * Gère la connexion à la base de données.
+ * 
+ * @author Adrien Riffaut
+ */
 public class DatabaseConnection {
 	
+	/**
+     * Établit une connexion à la base de données en utilisant les paramètres de configuration.
+     * 
+     * @return une connexion à la base de données, ou {@code null} si la connexion échoue
+     */
 	public static Connection getConnection() {
 		Connection connection = null;
 		try {
