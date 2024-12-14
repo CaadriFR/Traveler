@@ -22,7 +22,7 @@ public class GeneticManager {
 		return this.individu;
 	}
 	
-	public List<Double> getDistanceEvolution() {
+	public List<Double> getFitnessEvolution() {
 		return this.fitnessEvolution;
 	}
 
@@ -40,7 +40,7 @@ public class GeneticManager {
 		Individu child2;
 
 		mypopulation1.newPopulation();
-		mypopulation1.displayAllPopulation();
+		mypopulation1.displayBestIndividu();
 
 		int i = 0;
 		int j;

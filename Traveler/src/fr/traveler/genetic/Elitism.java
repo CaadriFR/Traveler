@@ -46,7 +46,7 @@ public class Elitism {
 		}
 
 		index.sort(Comparator.comparingDouble(i -> population.get((int) i).getFitness()).reversed());
-
+		
 		List<Individu> populationOrdered = new ArrayList<>();
 
 		for (int i : index) {

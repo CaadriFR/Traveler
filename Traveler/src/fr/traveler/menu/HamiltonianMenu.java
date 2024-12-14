@@ -1,10 +1,18 @@
 package fr.traveler.menu;
 
+import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import fr.traveler.config.Config;
+import fr.traveler.display.FitnessGraph;
+import fr.traveler.display.FranceMap;
 import fr.traveler.ecosystem.EcosystemManager;
 import fr.traveler.ecosystem.entities.Discipline;
 import fr.traveler.ecosystem.entities.MCF;
@@ -17,7 +25,6 @@ import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.GeographyManager;
 import fr.traveler.geography.entities.City;
 import fr.traveler.geography.entities.Region;
-import fr.traveler.geography.map.FranceMap;
 
 public class HamiltonianMenu {
 
@@ -28,10 +35,9 @@ public class HamiltonianMenu {
 			System.out.println("\n--- Hamiltonian Cycle Menu ---");
 			System.out.println("1. Cycle to visit students in a given discipline");
 			System.out.println("2. Cycle to visit researchers over 55 years old");
-			System.out.println("3. Cycle to visit all titulars");
-			System.out.println("4. Cycle to visit everyone");
-			System.out.println("5. Custom cycle");
-			System.out.println("6. Go to Ecosystem Management Menu");
+			System.out.println("3. Cycle to visit everyone");
+			System.out.println("4. Custom cycle");
+			System.out.println("5. Go to Ecosystem Management Menu");
 			System.out.print("Choose an option: ");
 
 			int choice = -1;
@@ -45,30 +51,39 @@ public class HamiltonianMenu {
 			switch (choice) {
 			case 1:
 				Discipline disciplineFilter = MenuUtils.addDisciplineInteractive(scanner);
-				List<Person> studentByDiscipline = filterPersons(ecosystemManager, 1, -1, disciplineFilter, null, -1);
+				List<Person> studentByDiscipline = filterPersons(ecosystemManager, 1, -1, disciplineFilter, null, -1,
+						false);
 				prepareGeneticAlgorithm(ecosystemManager, geographyManager, studentByDiscipline);
 				break;
 			case 2:
-				List<Person> olderResearcher = filterPersons(ecosystemManager, 3, 55, null, null, -1);
+				List<Person> olderResearcher = filterPersons(ecosystemManager, 3, 55, null, null, -1, false);
 				prepareGeneticAlgorithm(ecosystemManager, geographyManager, olderResearcher);
 				break;
 			case 3:
-				List<Person> allTitulars = filterPersons(ecosystemManager, 2, -1, null, null, -1);
-				prepareGeneticAlgorithm(ecosystemManager, geographyManager, allTitulars);
-				break;
-			case 4:
 				List<Person> everyone = ecosystemManager.getAllPersons();
 				prepareGeneticAlgorithm(ecosystemManager, geographyManager, everyone);
 				break;
-			case 5:
+			case 4:
 				performCustomCycle(ecosystemManager, geographyManager, scanner);
 				continue;
-			case 6:
+			case 5:
 				back = true;
 				break;
 			default:
-				System.out.println("Invalid option. Please try again.");
+				System.out.println("Invalid input. Please enter a number between 1 and 5.");
 				continue;
+			}
+		}
+	}
+
+	private static Region addRegionInteractive(Scanner scanner) {
+		while (true) {
+			try {
+				System.out.print("Enter a region: ");
+				String regionInput = scanner.nextLine().trim().toUpperCase();
+				return Region.valueOf(regionInput);
+			} catch (IllegalArgumentException e) {
+				System.out.println("Invalid region entered. Please try again.");
 			}
 		}
 	}
@@ -130,23 +145,29 @@ public class HamiltonianMenu {
 			}
 		}
 
-		Region regionFilter = null;
+		Set<Region> regionsFilter = new HashSet<>();
 		while (true) {
 			System.out.print("Filter by region? (yes/no): ");
 			String filterByRegion = scanner.nextLine().trim();
 			if (filterByRegion.equalsIgnoreCase("yes")) {
 				System.out.println("Available regions:");
 				for (Region region : Region.values()) {
-					System.out.println("- " + region.name());
+					if (region != Region.UNKNOWN)
+						System.out.println("- " + region.name());
 				}
-				try {
-					System.out.print("Enter the region: ");
-					String regionInput = scanner.nextLine().trim().toUpperCase();
-					regionFilter = Region.valueOf(regionInput);
-					break;
-				} catch (IllegalArgumentException e) {
-					System.out.println("Invalid region entered. Please try again.");
+
+				regionsFilter.add(addRegionInteractive(scanner));
+
+				while (true) {
+					System.out.print("Would you like to add another region? (yes/no): ");
+					String addAnother = scanner.nextLine().trim();
+					if (addAnother.equalsIgnoreCase("yes")) {
+						regionsFilter.add(addRegionInteractive(scanner));
+					} else if (addAnother.equalsIgnoreCase("no")) {
+						break;
+					}
 				}
+				break;
 			} else if (filterByRegion.equalsIgnoreCase("no")) {
 				break;
 			}
@@ -176,15 +197,30 @@ public class HamiltonianMenu {
 			}
 		}
 
+		boolean supervisingStudent = false;
+
+		if (typeChoice == 2 || typeChoice == 3 || typeChoice == 4) {
+			while (true) {
+				System.out.print("Filter titulars supervising students (yes/no): ");
+				String filterSupervisingStudent = scanner.nextLine().trim();
+				if (filterSupervisingStudent.equalsIgnoreCase("yes")) {
+					supervisingStudent = true;
+					break;
+				} else if (filterSupervisingStudent.equalsIgnoreCase("no")) {
+					break;
+				}
+			}
+		}
+
 		List<Person> filteredPersons = filterPersons(ecosystemManager, typeChoice, minAge, disciplineFilter,
-				regionFilter, thesisYear);
+				regionsFilter, thesisYear, supervisingStudent);
 
 		prepareGeneticAlgorithm(ecosystemManager, geographyManager, filteredPersons);
 
 	}
 
 	private static List<Person> filterPersons(EcosystemManager ecosystemManager, int typeChoice, int minAge,
-			Discipline disciplineFilter, Region regionFilter, int thesisYear) {
+			Discipline disciplineFilter, Set<Region> regionsFilter, int thesisYear, boolean supervisingStudent) {
 		List<Person> filteredPersons = new ArrayList<>();
 
 		for (Person person : ecosystemManager.getAllPersons()) {
@@ -202,22 +238,40 @@ public class HamiltonianMenu {
 
 			if (disciplineFilter != null) {
 				if (person instanceof Student) {
-					if (!((Student) person).getDiscipline().equals(disciplineFilter))
+					Student student = (Student) person;
+					if (!student.getDiscipline().equals(disciplineFilter))
 						continue;
 				} else if (person instanceof Titular) {
-					if (!((Titular) person).getDisciplines().contains(disciplineFilter))
+					Titular titular = (Titular) person;
+					if (!titular.getDisciplines().contains(disciplineFilter))
 						continue;
 				}
 			}
 
-			if (regionFilter != null) {
-				if (Region.findRegionByCity(person.getCity()) != regionFilter)
+			if (regionsFilter != null && !regionsFilter.isEmpty()) {
+				Region personRegion = Region.findRegionByCity(person.getCity());
+				if (personRegion == Region.UNKNOWN || !regionsFilter.contains(personRegion))
 					continue;
 			}
 
-			if (person instanceof Student) {
-				if (thesisYear != -1 && ((Student) person).getThesisYear() != thesisYear)
+			if (person instanceof Student && thesisYear != -1) {
+				Student student = (Student) person;
+				if (student.getThesisYear() != thesisYear)
 					continue;
+			}
+
+			if (person instanceof Titular && supervisingStudent) {
+				if (person instanceof Researcher) {
+					Researcher researcher = (Researcher) person;
+					if (researcher.getSupervisedStudents().isEmpty()) {
+						continue;
+					}
+				} else if (person instanceof MCF) {
+					MCF mcf = (MCF) person;
+					if (mcf.getSupervisedStudent() == null) {
+						continue;
+					}
+				}
 			}
 
 			filteredPersons.add(person);
@@ -231,8 +285,9 @@ public class HamiltonianMenu {
 		if (persons.isEmpty()) {
 			System.out.println("No persons match the given criteria.");
 			return;
-		} else if (persons.size() == 1){
-			System.out.println("There aren't enough persons in different cities who match your criteria in the ecosystem.");
+		} else if (persons.size() == 1) {
+			System.out.println(
+					"There aren't enough persons in different cities who match your criteria in the ecosystem.");
 			return;
 		} else {
 			System.out.println("Filtered persons:");
@@ -254,8 +309,26 @@ public class HamiltonianMenu {
 		System.out.println(solution.getDistance());
 		System.out.println("Fitness : ");
 		System.out.println(solution.getFitness());
-		
-		FranceMap.showMapWithGraph(solution.getCycle(), geneticManager.getDistanceEvolution());
+
+		showMapWithGraph(solution.getCycle(), geneticManager.getFitnessEvolution());
+	}
+
+	private static void showMapWithGraph(List<City> cities, List<Double> fitnessValues) {
+		cities.add(cities.getFirst());
+
+		JFrame frame = new JFrame("Map and Fitness Graph");
+		frame.setLayout(new GridLayout(1, 2));
+
+		FranceMap mapPanel = new FranceMap(cities);
+
+		JPanel graphPanel = new FitnessGraph(fitnessValues);
+
+		frame.add(mapPanel);
+		frame.add(graphPanel);
+
+		frame.setSize(1300, 667);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setVisible(true);
 	}
 
 }

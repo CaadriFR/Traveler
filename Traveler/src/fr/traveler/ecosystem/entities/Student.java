@@ -9,11 +9,15 @@ public class Student extends Person {
 	private Titular titular;
 
 	public Student(String firstName, String lastName, int age, City city, String thesisSubject, Discipline discipline,
-			int thesisYear) {
+			int thesisYear, Titular titular) {
 		super(firstName, lastName, age, city);
 		this.thesisSubject = thesisSubject;
 		this.discipline = discipline;
 		this.thesisYear = thesisYear;
+		if (titular == null) {
+	        throw new IllegalArgumentException("A student must have a titular.");
+	    }
+		this.titular = titular;
 	}
 
 	public String getThesisSubject() {
@@ -30,10 +34,6 @@ public class Student extends Person {
 
 	public Titular getTitular() {
 		return titular;
-	}
-	
-	public void setTitular(Titular titular) {
-		this.titular = titular;
 	}
 
 	@Override

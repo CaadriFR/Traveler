@@ -3,7 +3,7 @@ package fr.traveler.genetic.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.traveler.genetic.FitnessUtils;
+import fr.traveler.config.Config;
 import fr.traveler.geography.entities.City;
 
 public class Population {
@@ -29,11 +29,19 @@ public class Population {
 	public void displayAllPopulation() {
 		int count = 1;
 		for (Individu individu : population) {
-			System.out.println("Individual number : " + (count++) + " : ");
+			System.out.println("Individual number : " + (count++) + " :");
 			individu.displayCities();
 			System.out.println(" DISTANCE : " + individu.getDistance());
 			System.out.println(" FITNESS : " + individu.getFitness());
 		}
+	}
+
+	public void displayBestIndividu() {
+		Individu individu = this.population.getFirst();
+		System.out.println("Individual number 1 :");
+		individu.displayCities();
+		System.out.println(" DISTANCE : " + individu.getDistance());
+		System.out.println(" FITNESS : " + individu.getFitness());
 	}
 
 	public int getSize() {
@@ -51,13 +59,11 @@ public class Population {
 	}
 
 	public Individu createRandomIndividu() {
-		// Ici soit on fait ça soit on code la possibilité de cloner un individu
 		Individu individu = new Individu(new ArrayList<>(this.citiesOfProblem));
 		individu.shuffleCycle();
 		return individu;
 	}
 
-	// Nouveau test d'initialisation des individus de la population
 	public Individu createIndividu() {
 		List<City> remainingCities = new ArrayList<>(this.citiesOfProblem);
 		List<City> cycle = new ArrayList<>();
@@ -86,20 +92,16 @@ public class Population {
 	}
 
 	public void newPopulation() {
-		int heuristicIndividuals = (int) Math.ceil(0.3 * this.size);
+		int heuristicIndividuals = (int) Math.ceil(Config.HEURISTIC_INITIALISATION * this.size);
 
 		for (int i = 0; i < heuristicIndividuals; i++) {
 			Individu individu = createIndividu();
-			if (!FitnessUtils.hasSimilarIndividu(individu.getDistance(), this.population)) {
-				this.population.add(individu);
-			}
+			this.population.add(individu);
 		}
 
 		while (this.population.size() < this.size) {
 			Individu individu = createRandomIndividu();
-			if (!FitnessUtils.hasSimilarIndividu(individu.getDistance(), this.population)) {
-				this.population.add(individu);
-			}
+			this.population.add(individu);
 		}
 	}
 
