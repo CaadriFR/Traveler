@@ -1,3 +1,18 @@
+/**
+ * Classe représentant une population d'individus dans l'algorithme génétique.
+ * Une population est constituée d'un ensemble d'individus (solutions) qui évoluent
+ * au cours des itérations de l'algorithme.
+ * 
+ * La classe fournit des méthodes pour :
+ * <ul>
+ *   <li>Créer une nouvelle population.</li>
+ *   <li>Initialiser des individus de manière aléatoire ou heuristique.</li>
+ *   <li>Afficher la population ou l'individu avec les meilleures performances.</li>
+ *   <li>Calculer les distances des cycles associés à chaque individu.</li>
+ * </ul>
+ * 
+ * @author Néo Moret
+ */
 package fr.traveler.genetic.entities;
 
 import java.util.ArrayList;
@@ -8,101 +23,162 @@ import fr.traveler.geography.entities.City;
 
 public class Population {
 
-	private List<City> citiesOfProblem;
-	private int size;
-	private List<Individu> population = new ArrayList<>();
+    /**
+     * Liste des villes représentant le problème à résoudre.
+     */
+    private List<City> citiesOfProblem;
 
-	public Population(List<City> citiesOfProblem, int size) {
-		this.citiesOfProblem = new ArrayList<>(citiesOfProblem);
-		this.size = size;
-	}
+    /**
+     * Taille de la population.
+     */
+    private int size;
 
-	public Population(List<Individu> population) {
-		this.size = population.size();
-		this.population = population;
-	}
+    /**
+     * Liste des individus composant la population.
+     */
+    private List<Individu> population = new ArrayList<>();
 
-	public Population(int size) {
-		this.size = size;
-	}
+    /**
+     * Constructeur permettant de créer une population avec une liste de villes et une taille donnée.
+     * 
+     * @param citiesOfProblem Liste des villes associées au problème.
+     * @param size Taille de la population à générer.
+     */
+    public Population(List<City> citiesOfProblem, int size) {
+        this.citiesOfProblem = new ArrayList<>(citiesOfProblem);
+        this.size = size;
+    }
 
-	public void displayAllPopulation() {
-		int count = 1;
-		for (Individu individu : population) {
-			System.out.println("Individual number : " + (count++) + " :");
-			individu.displayCities();
-			System.out.println(" DISTANCE : " + individu.getDistance());
-			System.out.println(" FITNESS : " + individu.getFitness());
-		}
-	}
+    /**
+     * Constructeur permettant de créer une population à partir d'une liste d'individus existants.
+     * 
+     * @param population Liste des individus qui composent cette population.
+     */
+    public Population(List<Individu> population) {
+        this.size = population.size();
+        this.population = population;
+    }
 
-	public void displayBestIndividu() {
-		Individu individu = this.population.getFirst();
-		System.out.println("Individual number 1 :");
-		individu.displayCities();
-		System.out.println(" DISTANCE : " + individu.getDistance());
-		System.out.println(" FITNESS : " + individu.getFitness());
-	}
+    /**
+     * Constructeur permettant de créer une population avec une taille donnée.
+     * 
+     * @param size Taille de la population.
+     */
+    public Population(int size) {
+        this.size = size;
+    }
 
-	public int getSize() {
-		return size;
-	}
+    /**
+     * Affiche tous les individus de la population avec leurs cycles, distances et fitness.
+     */
+    public void displayAllPopulation() {
+        int count = 1;
+        for (Individu individu : population) {
+            System.out.println("Individual number : " + (count++) + " :");
+            individu.displayCities();
+            System.out.println(" DISTANCE : " + individu.getDistance());
+            System.out.println(" FITNESS : " + individu.getFitness());
+        }
+    }
 
-	public List<Individu> getPopulation() {
-		return population;
-	}
+    /**
+     * Affiche le meilleur individu de la population (le premier de la liste).
+     */
+    public void displayBestIndividu() {
+        Individu individu = this.population.get(0);
+        System.out.println("Individual number 1 :");
+        individu.displayCities();
+        System.out.println(" DISTANCE : " + individu.getDistance());
+        System.out.println(" FITNESS : " + individu.getFitness());
+    }
 
-	public void computeAllDistances() {
-		for (Individu individu : population) {
-			individu.computeDistance();
-		}
-	}
+    /**
+     * Retourne la taille de la population.
+     * 
+     * @return La taille de la population.
+     */
+    public int getSize() {
+        return size;
+    }
 
-	public Individu createRandomIndividu() {
-		Individu individu = new Individu(new ArrayList<>(this.citiesOfProblem));
-		individu.shuffleCycle();
-		return individu;
-	}
+    /**
+     * Retourne la liste des individus composant la population.
+     * 
+     * @return La liste des individus de la population.
+     */
+    public List<Individu> getPopulation() {
+        return population;
+    }
 
-	public Individu createIndividu() {
-		List<City> remainingCities = new ArrayList<>(this.citiesOfProblem);
-		List<City> cycle = new ArrayList<>();
+    /**
+     * Calcule les distances associées aux cycles de tous les individus de la population.
+     */
+    public void computeAllDistances() {
+        for (Individu individu : population) {
+            individu.computeDistance();
+        }
+    }
 
-		City currentCity = remainingCities.remove((int) (Math.random() * remainingCities.size()));
-		cycle.add(currentCity);
+    /**
+     * Crée un individu aléatoire à partir de la liste des villes du problème.
+     * 
+     * @return Un individu avec un cycle aléatoire.
+     */
+    public Individu createRandomIndividu() {
+        Individu individu = new Individu(new ArrayList<>(this.citiesOfProblem));
+        individu.shuffleCycle();
+        return individu;
+    }
 
-		while (!remainingCities.isEmpty()) {
-			City nearestCity = null;
-			double minDistance = Double.MAX_VALUE;
+    /**
+     * Crée un individu de manière heuristique, en choisissant à chaque étape la ville la plus proche.
+     * 
+     * @return Un individu initialisé avec une heuristique de proximité.
+     */
+    public Individu createIndividu() {
+        List<City> remainingCities = new ArrayList<>(this.citiesOfProblem);
+        List<City> cycle = new ArrayList<>();
 
-			for (City city : remainingCities) {
-				double distance = currentCity.distanceTo(city);
-				if (distance < minDistance) {
-					minDistance = distance;
-					nearestCity = city;
-				}
-			}
+        City currentCity = remainingCities.remove((int) (Math.random() * remainingCities.size()));
+        cycle.add(currentCity);
 
-			cycle.add(nearestCity);
-			remainingCities.remove(nearestCity);
-			currentCity = nearestCity;
-		}
+        while (!remainingCities.isEmpty()) {
+            City nearestCity = null;
+            double minDistance = Double.MAX_VALUE;
 
-		return new Individu(cycle);
-	}
+            for (City city : remainingCities) {
+                double distance = currentCity.distanceTo(city);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    nearestCity = city;
+                }
+            }
 
-	public void newPopulation() {
-		int heuristicIndividuals = (int) Math.ceil(Config.HEURISTIC_INITIALISATION * this.size);
+            cycle.add(nearestCity);
+            remainingCities.remove(nearestCity);
+            currentCity = nearestCity;
+        }
 
-		for (int i = 0; i < heuristicIndividuals; i++) {
-			Individu individu = createIndividu();
-			this.population.add(individu);
-		}
+        return new Individu(cycle);
+    }
 
-		while (this.population.size() < this.size) {
-			Individu individu = createRandomIndividu();
-			this.population.add(individu);
-		}
-	}
+    /**
+     * Génère une nouvelle population en combinant initialisations heuristique et aléatoire.
+     * Le pourcentage d'individus initialisés de manière heuristique est défini par {@code Config.HEURISTIC_INITIALISATION}.
+     */
+    public void newPopulation() {
+        int heuristicIndividuals = (int) Math.ceil(Config.HEURISTIC_INITIALISATION * this.size);
 
+        // Initialisation heuristique
+        for (int i = 0; i < heuristicIndividuals; i++) {
+            Individu individu = createIndividu();
+            this.population.add(individu);
+        }
+
+        // Initialisation aléatoire pour compléter la population
+        while (this.population.size() < this.size) {
+            Individu individu = createRandomIndividu();
+            this.population.add(individu);
+        }
+    }
 }

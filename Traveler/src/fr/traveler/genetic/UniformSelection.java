@@ -1,3 +1,11 @@
+/**
+ * Classe permettant de sélectionner uniformément deux parents dans une population
+ * afin de procéder à l'opération de croisement (crossing).
+ * 
+ * Cette classe implémente une méthode de sélection basée sur les fitness des individus.
+ * 
+ * @author Néo Moret
+ */
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
@@ -7,99 +15,144 @@ import fr.traveler.genetic.entities.Individu;
 
 public class UniformSelection {
 
-	private List<Individu> population;
-	private List<Double> fitness_cumul;
-	private Individu parent1;
-	private Individu parent2;
+    /**
+     * Liste des individus représentant la population.
+     */
+    private List<Individu> population;
 
-	public UniformSelection(List<Individu> population) {
-		this.population = population;
-		this.fitness_cumul = new ArrayList<Double>();
-	}
+    /**
+     * Liste cumulative des fitness des individus, utilisée pour la sélection uniforme.
+     */
+    private List<Double> fitness_cumul;
 
-	public List<Individu> getPopulation() {
-		return this.population;
-	}
+    /**
+     * Premier parent sélectionné.
+     */
+    private Individu parent1;
 
-	public List<Double> getTabFitnessCumul() {
-		return this.fitness_cumul;
-	}
+    /**
+     * Deuxième parent sélectionné.
+     */
+    private Individu parent2;
 
-	public Individu getParent1() {
-		return parent1;
-	}
+    /**
+     * Constructeur de la classe {@code UniformSelection}.
+     * Initialise la population et prépare une liste vide pour les fitness cumulées.
+     * 
+     * @param population La population dans laquelle les deux parents seront sélectionnés.
+     */
+    public UniformSelection(List<Individu> population) {
+        this.population = population;
+        this.fitness_cumul = new ArrayList<>();
+    }
 
-	public Individu getParent2() {
-		return parent2;
-	}
+    /**
+     * Getter pour la population.
+     * 
+     * @return La liste des individus représentant la population.
+     */
+    public List<Individu> getPopulation() {
+        return this.population;
+    }
 
-	public void buildTabOfFitnessCumul() {
+    /**
+     * Getter pour le tableau cumulatif des fitness.
+     * 
+     * @return Une liste de doubles représentant les valeurs cumulées des fitness.
+     */
+    public List<Double> getTabFitnessCumul() {
+        return this.fitness_cumul;
+    }
 
-		double mysum = 0;
+    /**
+     * Getter pour le premier parent sélectionné.
+     * 
+     * @return L'individu sélectionné comme premier parent.
+     */
+    public Individu getParent1() {
+        return parent1;
+    }
 
-		for (Individu individu : population) {
-			mysum += individu.getFitness();
-		}
+    /**
+     * Getter pour le deuxième parent sélectionné.
+     * 
+     * @return L'individu sélectionné comme deuxième parent.
+     */
+    public Individu getParent2() {
+        return parent2;
+    }
 
-		double fitness_cumul = 0;
-		this.fitness_cumul.add(fitness_cumul);
+    /**
+     * Construit le tableau cumulatif des fitness pour la population.
+     * Cette méthode calcule les valeurs cumulées des fitness normalisées en pourcentage
+     * (sur une échelle de 0 à 100).
+     */
+    public void buildTabOfFitnessCumul() {
+        double mysum = 0;
 
-		for (Individu individu : population) {
-			fitness_cumul += ((individu.getFitness() * 100) / mysum);
+        // Calcul de la somme totale des fitness
+        for (Individu individu : population) {
+            mysum += individu.getFitness();
+        }
 
-			this.fitness_cumul.add(fitness_cumul);
-		}
+        double fitness_cumul = 0;
+        this.fitness_cumul.add(fitness_cumul);
 
-		if (this.fitness_cumul.getLast() != 100)
-			this.fitness_cumul.set(this.fitness_cumul.size() - 1, (double) 100);
-	}
+        // Construction du tableau cumulatif
+        for (Individu individu : population) {
+            fitness_cumul += ((individu.getFitness() * 100) / mysum);
+            this.fitness_cumul.add(fitness_cumul);
+        }
 
-	public void ChooseMyParent() {
+        // Correction pour s'assurer que la dernière valeur est exactement 100
+        if (this.fitness_cumul.get(this.fitness_cumul.size() - 1) != 100) {
+            this.fitness_cumul.set(this.fitness_cumul.size() - 1, 100.0);
+        }
+    }
 
-		buildTabOfFitnessCumul();
+    /**
+     * Sélectionne uniformément deux parents dans la population.
+     * <p>
+     * La méthode utilise un tableau cumulatif des fitness et génère des nombres
+     * aléatoires pour déterminer les indices des parents sélectionnés. Les deux
+     * parents sélectionnés sont différents.
+     */
+    public void ChooseMyParent() {
+        buildTabOfFitnessCumul();
 
-		int myRandom = (int) ((Math.random() * 100));
+        // Sélection du premier parent
+        int myRandom = (int) (Math.random() * 100);
+        int indexOfParent1 = 0;
 
-		int indexOfParent1 = 0;
-		int indexOfParent2 = 0;
+        while (true) {
+            if (this.fitness_cumul.get(indexOfParent1) <= myRandom
+                    && this.fitness_cumul.get(indexOfParent1 + 1) > myRandom) {
+                break;
+            }
+            indexOfParent1++;
+        }
 
-		// System.out.println("Random 1 :");
-		// System.out.println(myRandom);
+        this.parent1 = population.get(indexOfParent1);
 
-		while (true) { // a modifier pour eviter pb boucle inf
-			if (this.fitness_cumul.get(indexOfParent1) <= myRandom
-					&& this.fitness_cumul.get(indexOfParent1 + 1) > myRandom) {
-				break;
-			}
-			indexOfParent1++;
-		}
+        // Sélection du deuxième parent
+        myRandom = (int) (Math.random() * 100);
+        int indexOfParent2 = 0;
 
-		// System.out.println("index 1 :" + indexOfParent1);
+        while (true) {
+            if (this.fitness_cumul.get(indexOfParent2) <= myRandom
+                    && this.fitness_cumul.get(indexOfParent2 + 1) >= myRandom) {
+                if (indexOfParent2 == indexOfParent1) {
+                    // Réinitialisation si le même parent est sélectionné
+                    myRandom = (int) (Math.random() * 100);
+                    indexOfParent2 = 0;
+                    continue;
+                } else {
+                    break;
+                }
+            }
+            indexOfParent2++;
+        }
 
-		this.parent1 = population.get(indexOfParent1);
-
-		myRandom = (int) ((Math.random() * 100));
-
-		// System.out.println("Random 2 :");
-		// System.out.println(myRandom);
-
-		while (true) {
-			if (this.fitness_cumul.get(indexOfParent2) <= myRandom
-					&& this.fitness_cumul.get(indexOfParent2 + 1) >= myRandom) {
-				if (indexOfParent2 == indexOfParent1) {
-					myRandom = (int) ((Math.random() * 100));
-					// System.out.println(" New Random : " + myRandom);
-					indexOfParent2 = 0;
-					continue;
-				} else
-					break;
-			}
-			indexOfParent2++;
-		}
-
-		// System.out.println("index 2 :" + indexOfParent2);
-
-		this.parent2 = population.get(indexOfParent2);
-
-	}
+        this.parent2 = population.get(indexOfParent2);
+    }
 }

@@ -1,3 +1,15 @@
+/**
+ * Cette classe vise à implémenter la population finale à l'itération courante.
+ * À chaque itération dans {@code GeneticManager}, une nouvelle population est générée
+ * sur la base de l'ancienne population. Cette classe sélectionne les {@code Individu}s
+ * de l'ancienne et de la nouvelle population à inclure dans la population finale.
+ * 
+ * Note : 
+ * La population finale ne correspond pas à la solution finale au problème du voyageur de commerce.
+ * Elle représente simplement la population finale générée à l'itération actuelle de {@code GeneticManager}.
+ * 
+ * @author Néo Moret
+ */
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
@@ -7,70 +19,114 @@ import java.util.List;
 import fr.traveler.genetic.entities.Individu;
 
 public class Elitism {
+    
+    private List<Individu> old_population;
+    private List<Individu> new_population;
+    private List<Individu> final_population;
+    private double rate_elite;
 
-	private List<Individu> old_population;
-	private List<Individu> new_population;
-	private List<Individu> final_population;
+    /**
+     * Constructeur de la classe {@code Elitism}.
+     * Permet d'initialiser l'élitisme avec les populations de départ et le taux d'élite.
+     * 
+     * @param old_population L'ancienne population.
+     * @param new_population La nouvelle population.
+     * @param rate_elite Le taux d'élite, correspondant au pourcentage d'individus à conserver dans l'ancienne population.
+     */
+    public Elitism(List<Individu> old_population, List<Individu> new_population, double rate_elite) {
+        this.old_population = old_population;
+        this.new_population = new_population;
+        this.final_population = new ArrayList<>();
+        this.rate_elite = rate_elite;
+    }
 
-	private double rate_elite;
+    /**
+     * Getter pour l'ancienne population.
+     * 
+     * @return La liste des {@code Individu}s correspondant à l'ancienne population.
+     */
+    public List<Individu> getOldPopulation() {
+        return this.old_population;
+    }
 
-	public Elitism(List<Individu> old_population, List<Individu> new_population, double rate_elite) {
-		this.old_population = old_population;
-		this.new_population = new_population;
-		this.final_population = new ArrayList<>();
-		this.rate_elite = rate_elite;
-	}
+    /**
+     * Getter pour la nouvelle population.
+     * 
+     * @return La liste des {@code Individu}s correspondant à la nouvelle population.
+     */
+    public List<Individu> getNewPopulation() {
+        return this.new_population;
+    }
 
-	public List<Individu> getOldPopulation() {
-		return this.old_population;
-	}
+    /**
+     * Getter pour la population finale.
+     * 
+     * @return La liste des {@code Individu}s correspondant à la population finale.
+     */
+    public List<Individu> getFinalPopulation() {
+        return this.final_population;
+    }
 
-	public List<Individu> getNewPopulation() {
-		return this.new_population;
-	}
+    /**
+     * Setter pour le taux d'élite.
+     * Permet de mettre à jour le taux d'élite utilisé dans l'élitisme.
+     * 
+     * @param newRateElite Le nouveau taux d'élite. 
+     * Doit être compris entre 0 et 1.
+     */
+    public void setRateElite(double newRateElite) {
+        this.rate_elite = newRateElite;
+    }
 
-	public List<Individu> getFinalPopulation() {
-		return this.final_population;
-	}
+    /**
+     * Méthode qui réarrange une population par ordre décroissant de fitness.
+     * Une fois la population réorganisée, le meilleur individu est en position 0,
+     * le second meilleur en position 1, etc.
+     * 
+     * @param population La population à réorganiser.
+     * @return Une nouvelle liste d'individus triée par ordre décroissant de fitness.
+     */
+    public List<Individu> ReorderMyPopulation(List<Individu> population) {
+        List<Integer> index = new ArrayList<>();
+        for (int i = 0; i < population.size(); i++) {
+            index.add(i);
+        }
 
-	public void setRateElite(double newRateElite) {
-		this.rate_elite = newRateElite;
+        index.sort(Comparator.comparingDouble(i -> population.get((int) i).getFitness()).reversed());
+        
+        List<Individu> populationOrdered = new ArrayList<>();
 
-	}
+        for (int i : index) {
+            populationOrdered.add(population.get(i));
+        }
 
-	public List<Individu> ReorderMyPopulation(List<Individu> population) {
+        return populationOrdered;
+    }
 
-		List<Integer> index = new ArrayList<>();
-		for (int i = 0; i < population.size(); i++) {
-			index.add(i);
-		}
+    /**
+     * Méthode principale de la classe {@code Elitism}.
+     * Cette méthode construit la population finale en combinant l'ancienne et la nouvelle population.
+     * <ul>
+     *   <li>Elle sélectionne un certain pourcentage d'individus de la nouvelle population,
+     *       basé sur {@code rate_elite}.</li>
+     *   <li>Elle complète avec les individus de l'ancienne population pour atteindre
+     *       la taille totale de la population.</li>
+     * </ul>
+     * 
+     * Le tri des populations est effectué à l'aide de {@code ReorderMyPopulation}.
+     */
+    public void BuildMyFinalPopulation() {
+        int index_rateElite = (int) Math.ceil(this.rate_elite * this.new_population.size());
 
-		index.sort(Comparator.comparingDouble(i -> population.get((int) i).getFitness()).reversed());
-		
-		List<Individu> populationOrdered = new ArrayList<>();
+        List<Individu> old_populationOrdered = ReorderMyPopulation(this.old_population);
+        List<Individu> new_populationOrdered = ReorderMyPopulation(this.new_population);
 
-		for (int i : index) {
-			populationOrdered.add(population.get(i));
-		}
+        for (int i = 0; i < index_rateElite; i++) {
+            this.final_population.add(new_populationOrdered.get(i));
+        }
 
-		return populationOrdered;
-
-	}
-
-	public void BuildMyFinalPopulation() {
-
-		int index_rateElite = (int) Math.ceil(this.rate_elite * this.new_population.size());
-
-		List<Individu> old_populationOrdered = ReorderMyPopulation(this.old_population);
-		List<Individu> new_populationOrdered = ReorderMyPopulation(this.new_population);
-
-		for (int i = 0; i < index_rateElite; i++) {
-			this.final_population.add(new_populationOrdered.get(i));
-		}
-
-		for (int j = 0; j < this.old_population.size() - index_rateElite; j++) {
-			this.final_population.add(old_populationOrdered.get(j));
-		}
-	}
-
+        for (int j = 0; j < this.old_population.size() - index_rateElite; j++) {
+            this.final_population.add(old_populationOrdered.get(j));
+        }
+    }
 }
