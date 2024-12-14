@@ -1,3 +1,10 @@
+package fr.traveler.genetic;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.traveler.genetic.entities.Individu;
+
 /**
  * Classe permettant de sélectionner uniformément deux parents dans une population
  * afin de procéder à l'opération de croisement (crossing).
@@ -6,13 +13,6 @@
  * 
  * @author Néo Moret
  */
-package fr.traveler.genetic;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.traveler.genetic.entities.Individu;
-
 public class UniformSelection {
 
     /**

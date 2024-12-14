@@ -109,7 +109,7 @@ public class City {
 	 * Calcule la distance entre cette ville et une autre en utilisant la formule
 	 * haversine du projet bdd.
 	 * 
-	 * @param other la ville cible
+	 * @param otherCity la ville cible
 	 * @return la distance en kilomètres entre les deux villes
 	 */
 	public double distanceTo(City otherCity) {

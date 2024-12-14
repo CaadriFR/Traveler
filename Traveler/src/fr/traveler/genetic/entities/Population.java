@@ -1,3 +1,11 @@
+package fr.traveler.genetic.entities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.traveler.config.Config;
+import fr.traveler.geography.entities.City;
+
 /**
  * Classe représentant une population d'individus dans l'algorithme génétique.
  * Une population est constituée d'un ensemble d'individus (solutions) qui évoluent
@@ -13,14 +21,6 @@
  * 
  * @author Néo Moret
  */
-package fr.traveler.genetic.entities;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import fr.traveler.config.Config;
-import fr.traveler.geography.entities.City;
-
 public class Population {
 
 	/**

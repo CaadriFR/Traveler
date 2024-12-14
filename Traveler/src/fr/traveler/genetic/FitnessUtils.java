@@ -1,3 +1,8 @@
+package fr.traveler.genetic;
+
+import java.util.List;
+import fr.traveler.genetic.entities.Individu;
+
 /**
  * Classe utilitaire permettant de calculer des informations relatives au fitness
  * d'une population d'individus. 
@@ -5,12 +10,6 @@
  * 
  * @author Néo Moret
  */
-
-package fr.traveler.genetic;
-
-import java.util.List;
-import fr.traveler.genetic.entities.Individu;
-
 public class FitnessUtils {
 
 	/**

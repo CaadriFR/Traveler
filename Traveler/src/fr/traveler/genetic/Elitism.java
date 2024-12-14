@@ -1,3 +1,12 @@
+package fr.traveler.genetic;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import fr.traveler.config.Config;
+import fr.traveler.genetic.entities.Individu;
+
 /**
  * Cette classe vise à implémenter la population finale à l'itération courante.
  * À chaque itération dans {@code GeneticManager}, une nouvelle population est générée
@@ -10,20 +19,23 @@
  * 
  * @author Néo Moret
  */
-package fr.traveler.genetic;
-
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import fr.traveler.genetic.entities.Individu;
-
 public class Elitism {
 
+	/*
+	 * Ancienne population
+	 */
 	private List<Individu> old_population;
+	
+	/*
+	 * Nouvelle population
+	 */
 	private List<Individu> new_population;
+	
+	/*
+	 * Population finale
+	 */
 	private List<Individu> final_population;
-	private double rate_elite;
+	
 
 	/**
 	 * Constructeur de la classe {@code Elitism}. Permet d'initialiser l'élitisme
@@ -31,14 +43,11 @@ public class Elitism {
 	 * 
 	 * @param old_population L'ancienne population.
 	 * @param new_population La nouvelle population.
-	 * @param rate_elite     Le taux d'élite, correspondant au pourcentage
-	 *                       d'individus à conserver dans l'ancienne population.
 	 */
-	public Elitism(List<Individu> old_population, List<Individu> new_population, double rate_elite) {
+	public Elitism(List<Individu> old_population, List<Individu> new_population) {
 		this.old_population = old_population;
 		this.new_population = new_population;
 		this.final_population = new ArrayList<>();
-		this.rate_elite = rate_elite;
 	}
 
 	/**
@@ -67,16 +76,6 @@ public class Elitism {
 	 */
 	public List<Individu> getFinalPopulation() {
 		return this.final_population;
-	}
-
-	/**
-	 * Setter pour le taux d'élite. Permet de mettre à jour le taux d'élite utilisé
-	 * dans l'élitisme.
-	 * 
-	 * @param newRateElite Le nouveau taux d'élite. Doit être compris entre 0 et 1.
-	 */
-	public void setRateElite(double newRateElite) {
-		this.rate_elite = newRateElite;
 	}
 
 	/**
@@ -110,7 +109,7 @@ public class Elitism {
 	 * population finale en combinant l'ancienne et la nouvelle population.
 	 * <ul>
 	 * <li>Elle sélectionne un certain pourcentage d'individus de la nouvelle
-	 * population, basé sur {@code rate_elite}.</li>
+	 * population, basé sur le taux choisi dans la configuration.</li>
 	 * <li>Elle complète avec les individus de l'ancienne population pour atteindre
 	 * la taille totale de la population.</li>
 	 * </ul>
@@ -118,7 +117,7 @@ public class Elitism {
 	 * Le tri des populations est effectué à l'aide de {@code ReorderMyPopulation}.
 	 */
 	public void BuildMyFinalPopulation() {
-		int index_rateElite = (int) Math.ceil(this.rate_elite * this.new_population.size());
+		int index_rateElite = (int) Math.ceil(Config.ELITISM * this.new_population.size());
 
 		List<Individu> old_populationOrdered = ReorderMyPopulation(this.old_population);
 		List<Individu> new_populationOrdered = ReorderMyPopulation(this.new_population);

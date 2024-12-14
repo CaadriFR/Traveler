@@ -13,7 +13,7 @@ import fr.traveler.menu.EcosystemMenu;
  * @author Néo Moret
  */
 public class Main {
-
+	
 	/**
      * Méthode principale de l'application.
      * Initialise les gestionnaires nécessaires et affiche le menu de gestion de l'écosystème.

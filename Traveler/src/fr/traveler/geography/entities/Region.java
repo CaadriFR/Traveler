@@ -114,8 +114,8 @@ public enum Region {
 	/**
 	 * Construit une région avec les informations spécifiées.
 	 * 
-	 * @param capital               chef-lieu de la région
-	 * @param capitalDepartmentCode code du département du chef-lieu
+	 * @param capitalCity               chef-lieu de la région
+	 * @param capitalDepartment code du département du chef-lieu
 	 * @param area                  superficie de la région en kilomètres carrés
 	 * @param population            population de la région
 	 * @param departments           liste des départements composant la région

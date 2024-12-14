@@ -1,18 +1,3 @@
-/**
- * Classe représentant un individu dans l'algorithme génétique.
- * Un individu correspond à une solution potentielle pour le problème du voyageur de commerce.
- * 
- * Chaque individu est caractérisé par :
- * <ul>
- *   <li>Un cycle représentant l'ordre des villes à visiter.</li>
- *   <li>La distance totale du cycle.</li>
- * </ul>
- * 
- * Cette classe fournit des méthodes pour calculer la distance, mélanger le cycle,
- * afficher les villes, et appliquer des mutations pour l'évolution.
- * 
- * @author Néo Moret
- */
 package fr.traveler.genetic.entities;
 
 import java.util.Collections;
@@ -21,6 +6,15 @@ import java.util.List;
 import fr.traveler.config.Config;
 import fr.traveler.geography.entities.City;
 
+/**
+ * Classe représentant un individu dans l'algorithme génétique.
+ * Un individu correspond à une solution potentielle pour le problème du voyageur de commerce.
+ * 
+ * Cette classe fournit des méthodes pour calculer la distance, mélanger le cycle,
+ * afficher les villes, et appliquer des mutations pour l'évolution.
+ * 
+ * @author Néo Moret
+ */
 public class Individu {
 
 	/**

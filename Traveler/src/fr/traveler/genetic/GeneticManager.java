@@ -1,12 +1,3 @@
-/**
- * Classe principale du package Genetic.
- * Cette classe implémente l'algorithme génétique pour résoudre le problème du voyageur de commerce.
- * 
- * L'algorithme est implémenté par l'appel successif des différentes méthodes présentes dans les classes
- * du package `genetic`.
- * 
- * @author Néo Moret
- */
 package fr.traveler.genetic;
 
 import java.util.ArrayList;
@@ -17,9 +8,25 @@ import fr.traveler.genetic.entities.Individu;
 import fr.traveler.genetic.entities.Population;
 import fr.traveler.geography.entities.City;
 
+/**
+ * Classe principale du package Genetic.
+ * Cette classe implémente l'algorithme génétique pour résoudre le problème du voyageur de commerce.
+ * 
+ * L'algorithme est implémenté par l'appel successif des différentes méthodes présentes dans les classes
+ * du package `genetic`.
+ * 
+ * @author Néo Moret
+ */
 public class GeneticManager {
 
+	/*
+	 * Individu représentant la solution.
+	 */
     private Individu individu;
+    
+    /*
+     * Liste qui représente l'évolution du meilleur fitness de la population au fil des itérations.
+     */
     private List<Double> fitnessEvolution;
 
     /**
@@ -120,7 +127,7 @@ public class GeneticManager {
             }
             mypopulation2.computeAllDistances();
 
-            myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation(), Config.ELITISM);
+            myelite = new Elitism(mypopulation1.getPopulation(), mypopulation2.getPopulation());
             myelite.BuildMyFinalPopulation();
 
             mypopulation1 = new Population(myelite.getFinalPopulation());
