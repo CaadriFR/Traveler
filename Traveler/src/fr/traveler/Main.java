@@ -14,10 +14,10 @@ public class Main {
 		EcosystemManager ecosystemManager = new EcosystemManager();
 
 		Scanner scanner = new Scanner(System.in);
-		
+
 		EcosystemMenu.displayEcosystemMenu(ecosystemManager, geographyManager, scanner);
 
 		scanner.close();
-	}
-	}
 
+	}
+}
