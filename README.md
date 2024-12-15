@@ -11,9 +11,9 @@ Il permet une **sélection personnalisée** des personnes de cet écosystème se
 ## **Prérequis**
 
 ### **Environnement**
-- **Java 17** ou version supérieure  
-- **Eclipse IDE** (recommandé)  
-- **PostgreSQL** installé et configuré  
+- **Java 17** ou version supérieure
+- **Eclipse IDE** (recommandé)
+- **PostgreSQL** installé et configuré
 
 ### **Bibliothèques**
 - [`postgresql-42.7.4.jar`](https://jdbc.postgresql.org/download/) : Bibliothèque JDBC pour la connexion à PostgreSQL.
@@ -59,9 +59,9 @@ Il est conseillé d’utiliser les données disponibles pour les différentes vi
 | `MAX_STAGNATION`             | Détection de stagnation du fitness.           | `1000`           |
 
 #### **Affichage et Sauvegarde**
-- **`DISPLAY_SOLUTION`** : Afficher la carte et le graphique du fitness (`true`/`false`).  
-- **`SOLUTION_TO_FILE`** : Enregistrer la solution dans un fichier (`true`/`false`).  
-- **`SOLUTION_PATH`** : Chemin pour le fichier `solution.txt`.  
+- **`DISPLAY_SOLUTION`** : Afficher la carte et le graphique du fitness (`true`/`false`).
+- **`SOLUTION_TO_FILE`** : Enregistrer la solution dans un fichier (`true`/`false`).
+- **`SOLUTION_PATH`** : Chemin pour le fichier `solution.txt`.
 
 ---
 
@@ -70,8 +70,8 @@ Il est conseillé d’utiliser les données disponibles pour les différentes vi
 ### **Compilation**
 1. Importez le projet dans **Eclipse**.  
 2. Ajoutez les bibliothèques nécessaires au projet :
-   - **`postgresql-42.7.4.jar`** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add External JARs).  
-   - **JUnit 5** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add Library > JUnit). 
+   - **`postgresql-42.7.4.jar`** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add External JARs).
+   - **JUnit 5** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add Library > JUnit).
 
 Une fois ces étapes effectuées, le projet pourra être compilé et exécuté sans erreur directement depuis Eclipse.
 
@@ -109,22 +109,22 @@ L'écosystème par défaut contient des étudiants variés dans des villes qui c
 5. Go to Ecosystem Management Menu
 ```
 
-Le cycle personnalisé permet de :  
-1. **Choisir le type de personne** : Student, Titular, MCF, Researcher ou Everyone.  
-2. **Appliquer des filtres supplémentaires** :  
+Le cycle personnalisé permet de :
+1. **Choisir le type de personne** : Student, Titular, MCF, Researcher ou Everyone.
+2. **Appliquer des filtres supplémentaires** :
    - Par Âge
    - Par Discipline
    - Par Régions
 3. Trier :
-   - Par année de thèse (uniquement si le type choisi est **Student**).  
-   - Par titulaires encadrant des étudiants (uniquement si le type choisi est **Titular**, **MCF**, ou **Researcher**). 
+   - Par année de thèse (uniquement si le type choisi est **Student**).
+   - Par titulaires encadrant des étudiants (uniquement si le type choisi est **Titular**, **MCF**, ou **Researcher**).
 
 ---
 
 ## **Résultats**
 
-- **Console** : Affiche l’itinéraire optimisé et les détails de la solution.  
-- **Carte et graphique** *(si activés)* :  
-   - Carte modélisant l’itinéraire trouvé.  
-   - Graphique montrant l’évolution du fitness pendant les itérations de l’algorithme génétique.  
-- **Fichier `solution.txt`** *(si activé)* : La solution est sauvegardée au chemin spécifié dans `Config.java`.  
+- **Console** : Affiche l’itinéraire optimisé et les détails de la solution.
+- **Carte et graphique** *(si activés)* :
+   - Carte modélisant l’itinéraire trouvé.
+   - Graphique montrant l’évolution du fitness pendant les itérations de l’algorithme génétique.
+- **Fichier `solution.txt`** *(si activé)* : La solution est sauvegardée au chemin spécifié dans `Config.java`.
