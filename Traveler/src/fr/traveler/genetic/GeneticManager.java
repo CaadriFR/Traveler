@@ -94,17 +94,16 @@ public class GeneticManager {
 		mypopulation1.newPopulation();
 		//mypopulation1.displayAllPopulation();
 
-		int i = 0;
+		int iterations;
 		int j;
 
 		int noImprovementCounter = 0;
 		double bestDistance = FitnessUtils.getMinDistance(mypopulation1.getPopulation());
 		fitnessEvolution.add(10000 / bestDistance);
 
-		for (int iteration = 0; iteration < Config.MAX_ITERATIONS
-				&& noImprovementCounter < Config.MAX_STAGNATION; iteration++) {
+		for (iterations = 0; iterations < Config.MAX_ITERATIONS
+				&& noImprovementCounter < Config.MAX_STAGNATION; iterations++) {
 
-			i++;
 			j = 0;
 
 			mypopulation2 = new Population(size);
@@ -149,7 +148,7 @@ public class GeneticManager {
 
 		}
 
-		//System.out.println("Itérations : " + i);
+		System.out.println("Itérations : " + iterations);
 
 		this.individu = mypopulation1.getPopulation().getFirst();
 	}
