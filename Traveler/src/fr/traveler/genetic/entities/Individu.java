@@ -91,20 +91,21 @@ public class Individu {
 	}
 
 	/**
-	 * Affiche les noms des villes dans le cycle dans l'ordre. Si le cycle est vide,
-	 * affiche un message indiquant qu'il est vide.
+	 * Retourne les noms des villes dans le cycle dans l'ordre. Si le cycle est vide,
+	 * retourne un message indiquant qu'il est vide.
+	 * 
+	 * @return La chaîne de caractère représentant le cycle
 	 */
-	public void displayCities() {
+	public String displayCities() {
 		if (this.cycle.isEmpty()) {
-			System.out.println("This cycle is empty.");
-			return;
+			return "This cycle is empty.";
 		}
 		String cities = "";
 		for (City city : this.cycle) {
 			cities += city.getName() + "->";
 		}
 		cities += this.cycle.get(0).getName();
-		System.out.println(cities);
+		return cities;
 	}
 
 	/**

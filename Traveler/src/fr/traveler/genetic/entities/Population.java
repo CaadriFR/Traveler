@@ -78,21 +78,10 @@ public class Population {
 		int count = 1;
 		for (Individu individu : population) {
 			System.out.println("Individu number : " + (count++) + " :");
-			individu.displayCities();
+			System.out.println(individu.displayCities());
 			System.out.println(" DISTANCE : " + individu.getDistance());
 			System.out.println(" FITNESS : " + individu.getFitness());
 		}
-	}
-
-	/**
-	 * Affiche le meilleur individu de la population (le premier de la liste).
-	 */
-	public void displayBestIndividu() {
-		Individu individu = this.population.get(0);
-		System.out.println("Individu number 1 :");
-		individu.displayCities();
-		System.out.println(" DISTANCE : " + individu.getDistance());
-		System.out.println(" FITNESS : " + individu.getFitness());
 	}
 
 	/**

@@ -15,7 +15,7 @@ import fr.traveler.menu.EcosystemMenu;
 public class Main {
 	
 	/**
-     * Méthode principale de l'application.
+     * Méthode principale du programme.
      * Initialise les gestionnaires nécessaires et affiche le menu de gestion de l'écosystème.
      * 
      * @param args les arguments de ligne de commande (non utilisés)

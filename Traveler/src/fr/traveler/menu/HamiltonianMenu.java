@@ -249,12 +249,13 @@ public class HamiltonianMenu {
 	 * Filtre les personnes de l'écosystème en fonction des critères spécifiés.
 	 * 
 	 * @param ecosystemManager   le gestionnaire de l'écosystème
-	 * @param typeChoice         le type de personne à filtrer 
+	 * @param typeChoice         le type de personne à filtrer
 	 * @param minAge             l'âge minimum des personnes à inclure
 	 * @param disciplineFilter   la discipline à filtrer
 	 * @param regionsFilter      les régions à filtrer
 	 * @param thesisYear         l'année de thèse (pour les étudiants uniquement)
-	 * @param supervisingStudent filtre les titulaires supervisant des étudiants (pour les titulaires uniquement)
+	 * @param supervisingStudent filtre les titulaires supervisant des étudiants
+	 *                           (pour les titulaires uniquement)
 	 * @return une liste des personnes correspondant aux critères
 	 */
 	private static List<Person> filterPersons(EcosystemManager ecosystemManager, int typeChoice, int minAge,
@@ -319,12 +320,12 @@ public class HamiltonianMenu {
 	}
 
 	/**
-     * Prépare et exécute l'algorithme génétique pour un cycle hamiltonien.
-     * 
-     * @param ecosystemManager le gestionnaire de l'écosystème
-     * @param geographyManager le gestionnaire géographique
-     * @param persons          la liste des personnes à inclure dans le cycle
-     */
+	 * Prépare et exécute l'algorithme génétique pour un cycle hamiltonien.
+	 * 
+	 * @param ecosystemManager le gestionnaire de l'écosystème
+	 * @param geographyManager le gestionnaire géographique
+	 * @param persons          la liste des personnes à inclure dans le cycle
+	 */
 	private static void prepareGeneticAlgorithm(EcosystemManager ecosystemManager, GeographyManager geographyManager,
 			List<Person> persons) {
 		if (persons.isEmpty()) {
@@ -346,26 +347,36 @@ public class HamiltonianMenu {
 		GeneticManager geneticManager = new GeneticManager();
 		geneticManager.startGeneticAlgorithm(citiesFromPersons, Config.SIZE_POPULATION);
 
-		System.out.println("Solution : ");
 		Individu solution = geneticManager.getSolution();
-		solution.displayCities();
-		System.out.println();
-		System.out.println("Distance : ");
-		System.out.println(solution.getDistance());
-		System.out.println("Fitness : ");
-		System.out.println(solution.getFitness());
 
-		showMapWithGraph(solution.getCycle(), geneticManager.getFitnessEvolution());
+		String solutionText = "";
+		solutionText += "Solution :\n" + solution.displayCities() + "\nDistance :\n"
+				+ String.format("%.2f", solution.getDistance()) + " km\n" + "Fitness :\n"
+				+ String.format("%.3f", solution.getFitness()) + "\n";
+
+		System.out.println(solutionText);
+
+		List<City> solutionCycle = solution.getCycle();
+		solutionCycle.add(solutionCycle.get(0));
+
+		if (Config.SOLUTION_TO_FILE) {
+
+			solutionText += GeographyManager.generateDistanceSummary(solutionCycle);
+			MenuUtils.writeSolutionToFile(Config.SOLUTION_PATH, solutionText);
+		}
+
+		if (Config.DISPLAY_SOLUTION)
+			showMapWithGraph(solutionCycle, geneticManager.getFitnessEvolution());
 	}
 
 	/**
-     * Affiche la carte et le graphique des valeurs de fitness pour la solution trouvée.
-     * 
-     * @param cities         la liste des villes du cycle
-     * @param fitnessValues  la liste des valeurs de fitness de l'algorithme
-     */
+	 * Affiche la carte et le graphique des valeurs de fitness pour la solution
+	 * trouvée.
+	 * 
+	 * @param cities        la liste des villes du cycle
+	 * @param fitnessValues la liste des valeurs de fitness de l'algorithme
+	 */
 	private static void showMapWithGraph(List<City> cities, List<Double> fitnessValues) {
-		cities.add(cities.get(0));
 
 		JFrame frame = new JFrame("Map and Fitness Graph");
 		frame.setLayout(new GridLayout(1, 2));

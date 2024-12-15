@@ -80,4 +80,28 @@ public class GeographyManager {
 		return citiesFromPersons;
 	}
 
+	/**
+	 * Génère un résumé des distances entre chaque ville dans une liste donnée.
+	 * 
+	 * @param cities Liste des villes
+	 * @return Une chaîne contenant le résumé des distances entre chaque ville
+	 */
+	public static String generateDistanceSummary(List<City> cities) {
+		if (cities == null || cities.size() < 2) {
+			return "Insufficient list of cities to calculate distances.";
+		}
+
+		String summary = "";
+
+		for (int i = 0; i < cities.size() - 1; i++) {
+			City city1 = cities.get(i);
+			City city2 = cities.get(i + 1);
+			double distance = city1.distanceTo(city2);
+
+			summary += city1.getName() + " -> " + city2.getName() + " : " + String.format("%.2f", distance)+ " km\n";
+		}
+
+		return summary;
+	}
+
 }

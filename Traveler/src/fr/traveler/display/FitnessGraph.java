@@ -15,6 +15,9 @@ import javax.swing.JPanel;
  */
 public class FitnessGraph extends JPanel {
 
+	/**
+	 * Variable pour enlever les erreurs de éclipse
+	 */
 	private static final long serialVersionUID = 1L;
 
 	/**

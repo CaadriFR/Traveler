@@ -92,7 +92,7 @@ public class GeneticManager {
 		Individu child2;
 
 		mypopulation1.newPopulation();
-		mypopulation1.displayBestIndividu();
+		//mypopulation1.displayAllPopulation();
 
 		int i = 0;
 		int j;
@@ -149,7 +149,7 @@ public class GeneticManager {
 
 		}
 
-		System.out.println("Itérations :" + i);
+		//System.out.println("Itérations : " + i);
 
 		this.individu = mypopulation1.getPopulation().getFirst();
 	}
