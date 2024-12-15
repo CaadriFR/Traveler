@@ -12,10 +12,23 @@ import fr.traveler.genetic.FitnessUtils;
 import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.entities.City;
 
+
+/**
+ * Classe de test pour les utilitaires de fitness {@link FitnessUtils}.
+ * Elle teste l'unique méthode liée au calcul de la distance minimale dans une population.
+ * 
+ * @author Néo MORET
+ */
+
 public class FitnessUtilsTest {
 	
 	private List<Individu> population;
 	private double epsilon;
+	
+	 /**
+     * Méthode exécutée avant chaque test pour initialiser les données de test.
+     * Elle crée une population composée de plusieurs individus avec des séquences de villes différentes.
+     */
 	
 	@BeforeEach
 	public void buildSetUp() {
@@ -58,6 +71,11 @@ public class FitnessUtilsTest {
 		this.epsilon = 0;
 		
 	}
+	
+    /**
+     * Teste la méthode {@code getMinDistance} pour vérifier si elle retourne 
+     * correctement la distance minimale dans une population d'individus.
+     */
 	
 	@Test
 	public void testGetMinDistance(){

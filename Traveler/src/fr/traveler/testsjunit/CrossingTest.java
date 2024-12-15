@@ -2,6 +2,13 @@ package fr.traveler.testsjunit;
 
 import org.junit.jupiter.api.Test;
 
+/**
+ * Classe de test pour la classe {@link Crossing}.
+ * Elle vérifie le bon fonctionnement des opérations de croisement 
+ * dans le cadre de l'algorithme génétique.
+ * @author Néo MORET
+ */
+
 import fr.traveler.genetic.Crossing;
 import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.entities.City;
@@ -18,6 +25,13 @@ public class CrossingTest {
 	private Crossing myCrossing1;
 	private Crossing myCrossing2;
 	private Crossing myCrossing3;
+	
+	
+
+    /**
+     * Méthode exécutée avant chaque test pour initialiser les données de test.
+     * Elle crée des instances de {@link Crossing} avec différents cas de figure.
+     */
 
 	
 	@BeforeEach
@@ -127,14 +141,18 @@ public class CrossingTest {
 
 	}
 	
+	   /**
+     * Teste la méthode {@code buildCycle} pour vérifier la construction correcte des cycles
+     * entre les parents dans différents cas de figure.
+     * Ce test est très important car la fonctionnalité ou non de l'algorithme génétique 
+		repose essentiellement sur les opération de croissement 
+     */
+	
 	@Test
 	public void TestBuildCycle() {
 		
-		/*
-		 * Ce test est très important car la fonctionnalité ou non de l'algorithme génétique 
-		 * repose essentiellement sur les opération de croissement
-		 */
-		
+
+			
 		/*
 		 *  Test avec l'exemple du sujet :
 		 */

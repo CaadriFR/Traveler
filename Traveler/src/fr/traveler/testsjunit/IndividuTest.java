@@ -11,12 +11,24 @@ import org.junit.jupiter.api.BeforeEach;
 import fr.traveler.genetic.entities.Individu;
 import fr.traveler.geography.entities.City;
 
+/**
+ * Classe de test pour la classe {@link Individu}.
+ * Elle vérifie le calcul de la distance totale parcourue dans un cycle de villes.
+ * 
+ * @author Néo MORET
+ */
+
 public class IndividuTest {
 	
     private double epsilon;
     private Individu myIndividu1;
     private Individu myIndividu2;
     private Individu myIndividu3;
+    
+    /**
+     * Méthode exécutée avant chaque test pour initialiser les données de test.
+     * Elle crée plusieurs instances de {@link Individu} avec différentes séquences de villes.
+     */
 	
 	@BeforeEach
 	public void buildSetUp() {
@@ -57,12 +69,17 @@ public class IndividuTest {
 		
 	}
 	
+	   /**
+     * Teste la méthode {@code computeDistance} pour vérifier le calcul de la distance
+     * totale parcourue dans un cycle.
+     * <p>
+     * Le test utilise une marge d'erreur de 10 km pour les distances calculées.
+     * Il s'assure que la distance inclut correctement le retour à la ville initiale.
+     */
+	
 	@Test
 	public void testComputeDistance() {
 		
-		// On s'autorise une marge d'erreur de 10 kilomètres pour la distance globale
-		// On note que lorsqu'on appelle le constructeur de Individu, la distance globale est bie  calculée 
-		// en prenant soin de calculer la distance entre la dernière ville de notre cycle et le retour à la ville initiale
 		
 		assertEquals(1717.72, this.myIndividu1.getDistance(),this.epsilon, "Distance du cycle incorrecte"); 
 		assertEquals(2049.19 , this.myIndividu2.getDistance(),this.epsilon, "Distance du cycle incorrecte"); 

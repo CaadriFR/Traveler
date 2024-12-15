@@ -1,5 +1,17 @@
 package fr.traveler.testsjunit;
 
+/**
+ * Classe de test pour la classe {@link City}.
+ * Elle vérifie le bon fonctionnement de la méthode {@code distanceTo} 
+ * pour calculer la distance entre deux villes.
+ *//**
+ * Classe de test pour la classe {@link City}.
+ * Elle vérifie le bon fonctionnement de la méthode {@code distanceTo} 
+ * pour calculer la distance entre deux villes.
+ * 
+ * @Author Néo MORE
+ */
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,6 +25,11 @@ public class CityTest {
     private City paris; 
     private City londres; 
     private double epsilon;
+    
+    /**
+     * Méthode exécutée avant chaque test pour initialiser les données de test.
+     * Elle crée des instances de la classe {@link City} représentant différentes villes.
+     */
 	
 	@BeforeEach
 	public void buildSetUp() {
@@ -25,13 +42,16 @@ public class CityTest {
 		
 	}
 	
+	 /**
+     * Teste la méthode {@code distanceTo} pour vérifier le calcul de la distance 
+     * entre différentes villes avec une marge d'erreur définie.
+     * On autorise 1 km de marge d'erreur entre la distance proposée par notre formule et la distance réelle
+
+     */
+
 	@Test
 	public void testDistanceTo() {
-	 
-
-		//On autorise 1 km de marge d'erreur entre la distance proposée par notre formule et la distance réelle
-	    //  Distance sur l'équateur
-		
+	
 		assertEquals(10007, this.equateur.distanceTo(this.city1),this.epsilon, "Distance sur l'équateur incorrecte"); 
 		assertEquals(10007, this.poleNord.distanceTo(this.equateur),this.epsilon, "La distance entre l'équateur et le pôle Nord est incorrecte"); 
 		assertEquals(0, this.paris.distanceTo(this.paris),this.epsilon, "La distance entre deux villes identiques est incorrecte"); 

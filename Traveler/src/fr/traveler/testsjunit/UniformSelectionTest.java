@@ -13,9 +13,21 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 
+/**
+ * Classe de test pour la classe {@link UniformSelection}.
+ * Elle vérifie le bon fonctionnement des méthodes liées à la sélection uniforme dans une population.
+ * 
+ * @author Néo MORET
+ */
+
 public class UniformSelectionTest {
 	
 	UniformSelection mySelection;
+	
+	/**
+     * Méthode exécutée avant chaque test pour initialiser les données de test.
+     * Elle crée une population de plusieurs individus, chacun ayant une séquence de villes différente.
+     */
 	
 	@BeforeEach
 	public void buildSetUp() {
@@ -72,10 +84,16 @@ public class UniformSelectionTest {
 		this.mySelection = new UniformSelection(population);
 	}
 	
+	 /**
+     * Teste la méthode {@code buildTabOfFitnessCumul} pour vérifier si le tableau cumulatif
+     * des fitness est correctement calculé.
+     * <p>
+     * Le tableau cumulatif est utilisé dans les algorithmes de sélection pour la répartition des probabilités.
+     */
+	
 	@Test
 	public void TestbuildTabOfFitnessCumul() {
 		this.mySelection.buildTabOfFitnessCumul();
-		System.out.println(this.mySelection.getTabFitnessCumul());
 		
 		List<Double> expected = new ArrayList<>(List.of(
 				0.0,
