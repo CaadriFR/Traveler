@@ -74,7 +74,7 @@ public class GeographyManager {
 		List<City> citiesFromPersons = new ArrayList<>();
 		for (Person person : persons) {
 			City personCity = person.getCity();
-			if (!citiesFromPersons.contains(personCity))
+			if (personCity != null && !citiesFromPersons.contains(personCity))
 				citiesFromPersons.add(personCity);
 		}
 		return citiesFromPersons;

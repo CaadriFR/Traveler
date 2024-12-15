@@ -2,6 +2,7 @@ package fr.traveler.ecosystem;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import fr.traveler.ecosystem.entities.Discipline;
 import fr.traveler.ecosystem.entities.MCF;
@@ -60,34 +61,74 @@ public class EcosystemManager {
 	 * @param discipline    discipline de recherche
 	 * @param thesisYear    année de la thèse (1, 2 ou 3)
 	 * @param titular       encadrant de l'étudiant
+	 * @return L'instance de l'étudiant
 	 */
-	public void addStudent(String firstName, String lastName, int age, City city, String thesisSubject,
+	public Student addStudent(String firstName, String lastName, int age, City city, String thesisSubject,
 			Discipline discipline, int thesisYear, Titular titular) {
+		if (city == null) {
+			System.out.println("The Student " + firstName + " " + lastName
+					+ " was skipped because the city was not found in the database.");
+			return null;
+		}
+		if (titular == null) {
+			System.out.println("The Student " + firstName + " " + lastName
+					+ " was skipped because the specified titular does not exist in the ecosystem.");
+			return null;
+		}
 		Student student = new Student(firstName, lastName, age, city, thesisSubject, discipline, thesisYear, titular);
 		if (assignTitular(student, titular)) {
 			students.add(student);
 			System.out.println("Student added successfully: " + student);
 		}
+		return student;
 	}
 
 	/**
 	 * Ajoute un maître de conférences (MCF) à l'écosystème.
 	 * 
-	 * @param mcf le maître de conférences à ajouter
+	 * @param firstName    prénom du mcf
+	 * @param lastName     nom de famille du mcf
+	 * @param age          âge du mcf
+	 * @param city         ville de résidence
+	 * @param disciplines  les disciplines de recherches
+	 * @param officeNumber numéro de bureau
+	 * @return L'instance du maître de conférences
 	 */
-	public void addMCF(MCF mcf) {
+	public MCF addMCF(String firstName, String lastName, int age, City city, Set<Discipline> disciplines,
+			int officeNumber) {
+		if (city == null) {
+			System.out.println("The MCF " + firstName + " " + lastName
+					+ " was skipped because the city was not found in the database.");
+			return null;
+		}
+		MCF mcf = new MCF(firstName, lastName, age, city, disciplines, officeNumber);
 		titulars.add(mcf);
 		System.out.println("MCF added successfully: " + mcf);
+		return mcf;
 	}
 
 	/**
 	 * Ajoute un chercheur à l'écosystème.
 	 * 
-	 * @param researcher le chercheur à ajouter
+	 * @param firstName    prénom du chercheur
+	 * @param lastName     nom de famille du chercheur
+	 * @param age          âge du chercheur
+	 * @param city         ville de résidence
+	 * @param disciplines  les disciplines de recherches
+	 * @param officeNumber numéro de bureau
+	 * @return L'instance du chercheur
 	 */
-	public void addResearcher(Researcher researcher) {
+	public Researcher addResearcher(String firstName, String lastName, int age, City city, Set<Discipline> disciplines,
+			int officeNumber) {
+		if (city == null) {
+			System.out.println("The Researcher " + firstName + " " + lastName
+					+ " was skipped because the city was not found in the database.");
+			return null;
+		}
+		Researcher researcher = new Researcher(firstName, lastName, age, city, disciplines, officeNumber);
 		titulars.add(researcher);
 		System.out.println("Researcher added successfully: " + researcher);
+		return researcher;
 	}
 
 	/**

@@ -9,33 +9,33 @@ import fr.traveler.genetic.entities.Individu;
 
 /**
  * Cette classe vise à implémenter la population finale à l'itération courante.
- * À chaque itération dans {@code GeneticManager}, une nouvelle population est générée
- * sur la base de l'ancienne population. Cette classe sélectionne les {@code Individu}s
- * de l'ancienne et de la nouvelle population à inclure dans la population finale.
+ * À chaque itération dans {@code GeneticManager}, une nouvelle population est
+ * générée sur la base de l'ancienne population. Cette classe sélectionne les
+ * {@code Individu}s de l'ancienne et de la nouvelle population à inclure dans
+ * la population finale.
  * 
- * Note : 
- * La population finale ne correspond pas à la solution finale au problème du voyageur de commerce.
- * Elle représente simplement la population finale générée à l'itération actuelle de {@code GeneticManager}.
+ * Note : La population finale ne correspond pas à la solution finale au
+ * problème du voyageur de commerce. Elle représente simplement la population
+ * finale générée à l'itération actuelle de {@code GeneticManager}.
  * 
  * @author Néo Moret
  */
 public class Elitism {
 
-	/*
+	/**
 	 * Ancienne population
 	 */
 	private List<Individu> old_population;
-	
-	/*
+
+	/**
 	 * Nouvelle population
 	 */
 	private List<Individu> new_population;
-	
-	/*
+
+	/**
 	 * Population finale
 	 */
 	private List<Individu> final_population;
-	
 
 	/**
 	 * Constructeur de la classe {@code Elitism}. Permet d'initialiser l'élitisme

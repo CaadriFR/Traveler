@@ -13,32 +13,32 @@ import fr.traveler.geography.entities.City;
  */
 public class Crossing {
 
-	/*
+	/**
 	 * Premier parent
 	 */
 	private Individu parent1;
-	
-	/*
+
+	/**
 	 * Deuxième parent
 	 */
 	private Individu parent2;
-	
-	/*
+
+	/**
 	 * Premier enfant créé par l'opération de croisement
 	 */
 	private Individu child1;
-	
-	/*
+
+	/**
 	 * Deuxième enfant créé par l'opération de croisement
 	 */
 	private Individu child2;
-	
-	/*
+
+	/**
 	 * Les cycles présents dans les parents
 	 */
 	private List<List<Integer>> cycles;
-	
-	/*
+
+	/**
 	 * La taille d'un cycle hamiltonien
 	 */
 	private int size;

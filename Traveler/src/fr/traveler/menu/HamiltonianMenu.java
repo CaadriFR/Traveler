@@ -173,7 +173,7 @@ public class HamiltonianMenu {
 
 		Set<Region> regionsFilter = new HashSet<>();
 		while (true) {
-			System.out.print("Filter by region? (yes/no): ");
+			System.out.print("Filter by regions? (yes/no): ");
 			String filterByRegion = scanner.nextLine().trim();
 			if (filterByRegion.equalsIgnoreCase("yes")) {
 				System.out.println("Available regions:");

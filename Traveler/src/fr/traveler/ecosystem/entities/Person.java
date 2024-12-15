@@ -49,11 +49,16 @@ public abstract class Person {
 	 * @param lastName  le nom de famille de la personne
 	 * @param age       l'âge de la personne
 	 * @param city      la ville de résidence de la personne
+	 * 
+	 * @throws IllegalArgumentException si la ville est null
 	 */
 	public Person(String firstName, String lastName, int age, City city) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
+		if (city == null) {
+			throw new IllegalArgumentException("A person must have a valid city.");
+		}
 		this.city = city;
 		this.id = ++personCount;
 	}
