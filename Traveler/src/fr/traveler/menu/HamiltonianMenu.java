@@ -389,6 +389,7 @@ public class HamiltonianMenu {
 		frame.add(graphPanel);
 
 		frame.setSize(1300, 667);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.setVisible(true);
 	}
