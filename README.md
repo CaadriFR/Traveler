@@ -72,6 +72,8 @@ Il est conseillé d’utiliser les données disponibles pour les différentes vi
 2. Ajoutez les bibliothèques nécessaires au projet :
    - **`postgresql-42.7.4.jar`** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add External JARs).
    - **JUnit 5** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add Library > JUnit).
+3. Ajoutez le dossier **`resources`** au Build Path :  
+   - Faites un clic droit sur le dossier **`resources`** dans l’explorateur de projets > **Build Path** > **Use as Source Folder**.
 
 Une fois ces étapes effectuées, le projet pourra être compilé et exécuté sans erreur directement depuis Eclipse.
 
@@ -82,7 +84,7 @@ Exécutez la méthode `main()` située dans la classe **Main** (package `fr.trav
 
 ## **Utilisation**
 
-Une fois l’application lancée, l’utilisateur interagit via deux menus principaux :
+Une fois le programme lancé, l’utilisateur interagit via deux menus principaux :
 
 ### **1. Menu de Gestion de l’Écosystème**
 ```plaintext
