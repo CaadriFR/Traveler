@@ -68,11 +68,13 @@ Il est conseillé d’utiliser les données disponibles pour les différentes vi
 ## **Compilation et Exécution**
 
 ### **Compilation**
-1. Importez le projet dans **Eclipse**.  
-2. Ajoutez les bibliothèques nécessaires au projet :
+1. Importez le projet dans **Eclipse**.
+2. Configurer le JRE :  
+   - Vérifiez que le **JRE System Library** est correctement configuré pour utiliser **Java 17** ou une version ultérieure.
+3. Ajoutez les bibliothèques nécessaires au projet dans le Classpath :
    - **`postgresql-42.7.4.jar`** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add External JARs).
    - **JUnit 5** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add Library > JUnit).
-3. Ajoutez le dossier **`resources`** au Build Path :  
+4. Ajoutez le dossier **`resources`** au Build Path :  
    - Faites un clic droit sur le dossier **`resources`** dans l’explorateur de projets > **Build Path** > **Use as Source Folder**.
 
 Une fois ces étapes effectuées, le projet pourra être compilé et exécuté sans erreur directement depuis Eclipse.
@@ -126,7 +128,7 @@ Le cycle personnalisé permet de :
 ## **Résultats**
 
 - **Console** : Affiche l’itinéraire optimisé et les détails de la solution.
-- **Carte et graphique** *(si activés)* :
+- **Carte et graphique** *(si activé)* :
    - Carte modélisant l’itinéraire trouvé.
    - Graphique montrant l’évolution du fitness pendant les itérations de l’algorithme génétique.
 - **Fichier `solution.txt`** *(si activé)* : La solution est sauvegardée au chemin spécifié dans `Config.java`.
