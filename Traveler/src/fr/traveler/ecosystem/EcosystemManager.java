@@ -65,18 +65,24 @@ public class EcosystemManager {
 	 */
 	public Student addStudent(String firstName, String lastName, int age, City city, String thesisSubject,
 			Discipline discipline, int thesisYear, Titular titular) {
+
+		Student student = null;
+
 		if (city == null) {
 			System.out.println("The Student " + firstName + " " + lastName
 					+ " was skipped because the city was not found in the database.");
 			return null;
 		}
+
 		if (titular == null) {
 			System.out.println("The Student " + firstName + " " + lastName
 					+ " was skipped because the specified titular does not exist in the ecosystem.");
 			return null;
 		}
-		Student student = new Student(firstName, lastName, age, city, thesisSubject, discipline, thesisYear, titular);
-		if (assignTitular(student, titular)) {
+
+		if (canAssignTitular(titular)) {
+			student = new Student(firstName, lastName, age, city, thesisSubject, discipline, thesisYear, titular);
+			assignTitular(student, titular);
 			students.add(student);
 			System.out.println("Student added successfully: " + student);
 		}
@@ -197,13 +203,12 @@ public class EcosystemManager {
 	}
 
 	/**
-	 * Assigne un titulaire à un étudiant.
+	 * Vérifie si un titulaire peut encadrer un étudiant
 	 * 
-	 * @param student l'étudiant à encadrer
-	 * @param titular le titulaire qui sera l'encadrant
-	 * @return true si l'encadrement est réussi, false sinon
+	 * @return true si le titulaire peut être assigné, false sinon
 	 */
-	public static boolean assignTitular(Student student, Titular titular) {
+
+	public static boolean canAssignTitular(Titular titular) {
 		if (titular instanceof MCF) {
 			if (((MCF) titular).getSupervisedStudent() != null) {
 				System.out.println("The MCF " + titular.getFirstName() + " " + titular.getLastName() + " (ID="
@@ -211,8 +216,19 @@ public class EcosystemManager {
 				return false;
 			}
 
-			((MCF) titular).setSupervisedStudent(student);
+		}
+		return true;
+	}
 
+	/**
+	 * Assigne un titulaire à un étudiant.
+	 * 
+	 * @param student l'étudiant à encadrer
+	 * @param titular le titulaire qui sera l'encadrant
+	 */
+	public static void assignTitular(Student student, Titular titular) {
+		if (titular instanceof MCF) {
+			((MCF) titular).setSupervisedStudent(student);
 		} else if (titular instanceof Researcher) {
 			((Researcher) titular).addSupervisedStudent(student);
 		}
@@ -220,6 +236,5 @@ public class EcosystemManager {
 		System.out.println("The student " + student.getFirstName() + " " + student.getLastName() + " (ID="
 				+ student.getID() + ") is now supervised by " + titular.getFirstName() + " " + titular.getLastName()
 				+ " (ID=" + titular.getID() + ").");
-		return true;
 	}
 }
