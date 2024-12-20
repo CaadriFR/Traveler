@@ -93,11 +93,12 @@ Une fois le programme lancé, l’utilisateur interagit via deux menus principau
 --- Ecosystem Management Menu ---
 1. Generate the default ecosystem
 2. View the entire ecosystem
-3. Add a student
-4. Add an MCF
-5. Add a Researcher
-6. Go to Hamiltonian Cycle Menu
-7. Exit
+3. View the cities in the database
+4. Add a student
+5. Add an MCF
+6. Add a Researcher
+7. Go to Hamiltonian Cycle Menu
+8. Exit
 ```
 - **Génération** et **modification** des données (ajouter des étudiants, MCF, chercheurs).  
 L'écosystème par défaut contient des étudiants variés dans des villes qui couvrent une grande partie de la France, si les villes de certains étudiants ne se trouvent pas dans votre base de données, ils seront ignorés et pas ajoutés à l'écosystème.
