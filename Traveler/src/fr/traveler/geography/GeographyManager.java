@@ -31,6 +31,17 @@ public class GeographyManager {
 			System.exit(1);
 		}
 	}
+	
+	/**
+	 * Affiche les villes récupérées dans la base de donnée
+	 */
+	public void showAllCities() {
+		System.out.println("==== Cities ====");
+		for (City city : cities) {
+			System.out.println(city);
+		}
+
+	}
 
 	/**
 	 * Recherche des villes par leur nom.
