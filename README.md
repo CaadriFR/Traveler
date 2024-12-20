@@ -69,7 +69,7 @@ Il est conseillé d’utiliser les données disponibles pour les différentes vi
 
 ### **Compilation**
 1. Importez le projet dans **Eclipse**.
-2. Configurer le JRE :  
+2. Configurez le JRE :  
    - Vérifiez que le **JRE System Library** est correctement configuré pour utiliser **Java 17** ou une version ultérieure.
 3. Ajoutez les bibliothèques nécessaires au projet dans le Classpath :
    - **`postgresql-42.7.4.jar`** : (clic droit sur le projet > Properties > Java Build Path > Libraries > Add External JARs).
