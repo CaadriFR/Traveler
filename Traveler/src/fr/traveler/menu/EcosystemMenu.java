@@ -41,18 +41,19 @@ public class EcosystemMenu {
 			System.out.println("\n--- Ecosystem Management Menu ---");
 			System.out.println("1. Generate the default ecosystem");
 			System.out.println("2. View the entire ecosystem");
-			System.out.println("3. Add a student");
-			System.out.println("4. Add an MCF");
-			System.out.println("5. Add a Researcher");
-			System.out.println("6. Go to Hamiltonian Cycle Menu");
-			System.out.println("7. Exit");
+			System.out.println("3. View the cities in the database");
+			System.out.println("4. Add a student");
+			System.out.println("5. Add an MCF");
+			System.out.println("6. Add a Researcher");
+			System.out.println("7. Go to Hamiltonian Cycle Menu");
+			System.out.println("8. Exit");
 			System.out.print("Choose an option: ");
 
 			int choice = -1;
 			try {
 				choice = Integer.parseInt(scanner.nextLine().trim());
 			} catch (NumberFormatException e) {
-				System.out.println("Invalid input. Please enter a number between 1 and 7.");
+				System.out.println("Invalid input. Please enter a number between 1 and 8.");
 				continue;
 			}
 
@@ -71,22 +72,25 @@ public class EcosystemMenu {
 				ecosystemManager.showAllPersons();
 				continue;
 			case 3:
-				addStudentInteractive(ecosystemManager, geographyManager, scanner);
+				geographyManager.showAllCities();
 				continue;
 			case 4:
-				addMCFInteractive(ecosystemManager, geographyManager, scanner);
+				addStudentInteractive(ecosystemManager, geographyManager, scanner);
 				continue;
 			case 5:
-				addResearcherInteractive(ecosystemManager, geographyManager, scanner);
+				addMCFInteractive(ecosystemManager, geographyManager, scanner);
 				continue;
 			case 6:
-				HamiltonianMenu.displayHamiltonianMenu(ecosystemManager, geographyManager, scanner);
+				addResearcherInteractive(ecosystemManager, geographyManager, scanner);
 				continue;
 			case 7:
+				HamiltonianMenu.displayHamiltonianMenu(ecosystemManager, geographyManager, scanner);
+				continue;
+			case 8:
 				exit = true;
 				break;
 			default:
-				System.out.println("Invalid input. Please enter a number between 1 and 7.");
+				System.out.println("Invalid input. Please enter a number between 1 and 8.");
 				continue;
 			}
 		}
